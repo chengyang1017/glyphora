@@ -10,10 +10,16 @@ abstract final class AppTheme {
   }
 
   static ThemeData get midnight {
-    const background = Color(0xFF000000);
-    const surface = Color(0xFF080808);
-    const raisedSurface = Color(0xFF111111);
-    const border = Color(0xFF242424);
+    // Keep midnight comfortably dark without using pure black.
+    // The slightly lifted neutral surfaces reduce eye strain and make
+    // cards, sheets, inputs and navigation easier to distinguish.
+    const background = Color(0xFF121212);
+    const surface = Color(0xFF181818);
+    const surfaceLow = Color(0xFF1A1A1A);
+    const surfaceContainer = Color(0xFF1D1D1D);
+    const surfaceHigh = Color(0xFF212121);
+    const raisedSurface = Color(0xFF262626);
+    const border = Color(0xFF343434);
 
     final colorScheme =
         ColorScheme.fromSeed(
@@ -21,8 +27,14 @@ abstract final class AppTheme {
           brightness: Brightness.dark,
         ).copyWith(
           surface: surface,
+          surfaceContainerLowest: background,
+          surfaceContainerLow: surfaceLow,
+          surfaceContainer: surfaceContainer,
+          surfaceContainerHigh: surfaceHigh,
+          surfaceContainerHighest: raisedSurface,
           onSurface: const Color(0xFFF2F2F2),
-          outline: const Color(0xFF5D5D5D),
+          onSurfaceVariant: const Color(0xFFC2C2C2),
+          outline: const Color(0xFF666666),
           outlineVariant: border,
         );
 
@@ -43,7 +55,7 @@ abstract final class AppTheme {
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: surface,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor: const Color(0xFF9A9A9A),
+        unselectedItemColor: const Color(0xFFA8A8A8),
         type: BottomNavigationBarType.fixed,
       ),
       bottomSheetTheme: const BottomSheetThemeData(
@@ -55,8 +67,8 @@ abstract final class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: raisedSurface,
-        hintStyle: const TextStyle(color: Color(0xFF858585)),
-        labelStyle: const TextStyle(color: Color(0xFFB5B5B5)),
+        hintStyle: const TextStyle(color: Color(0xFF969696)),
+        labelStyle: const TextStyle(color: Color(0xFFC2C2C2)),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: border),
           borderRadius: BorderRadius.circular(12),
@@ -67,7 +79,7 @@ abstract final class AppTheme {
         ),
       ),
       snackBarTheme: const SnackBarThemeData(
-        backgroundColor: Color(0xFF1A1A1A),
+        backgroundColor: Color(0xFF262626),
         contentTextStyle: TextStyle(color: Color(0xFFF2F2F2)),
       ),
     );
