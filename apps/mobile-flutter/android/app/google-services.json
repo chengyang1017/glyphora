@@ -24,6 +24,44 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448948961427:android:185a828f10dc39ca4fcd66",
+        "android_client_info": {
+          "package_name": "com.glyphora.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgLSUjROM9FIATCIgJLffUZa78Vos_z38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448948961427:android:8ad07ef5dc7576ef4fcd66",
+        "android_client_info": {
+          "package_name": "com.glyphora.wanwenshern"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgLSUjROM9FIATCIgJLffUZa78Vos_z38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -1,0 +1,29 @@
+{
+  "version": 3,
+  "notes": [
+    {
+      "id": "f0ad8089-896d-4581-bd65-e429e9e2d992",
+      "filePath": "apps/mobile-flutter/lib/features/feed/presentation/cubit/feed_cubit.dart",
+      "placement": "inline",
+      "line": 14,
+      "column": 39,
+      "anchorText": "Stream<List<PostModel>> watchPosts({",
+      "text": "这里是函数",
+      "images": [],
+      "createdAt": "2026-09-05T13:51:00.607Z",
+      "updatedAt": "2026-09-05T13:51:00.607Z"
+    },
+    {
+      "id": "0c02a883-cc56-409a-ae8b-5edf974f7d21",
+      "filePath": "apps/mobile-flutter/lib/main.dart",
+      "placement": "inline",
+      "line": 61,
+      "column": 39,
+      "anchorText": "Widget build(BuildContext context) {",
+      "text": "this is function",
+      "images": [],
+      "createdAt": "2026-09-05T16:54:36.600Z",
+      "updatedAt": "2026-09-05T16:54:36.600Z"
+    }
+  ]
+}
