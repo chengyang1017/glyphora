@@ -54,12 +54,23 @@ class _ChatListScreenState extends State<ChatListScreen>
   }
 
   String _displayNameOf(BuildContext context, UserModel? user) {
-    final displayName = user?.profileDisplayName.trim() ?? '';
-    if (displayName.isNotEmpty) {
-      return displayName;
+    if (user != null) {
+      final locale = Localizations.localeOf(context);
+
+      final displayName = user
+          .displayNameFor(
+            languageCode: locale.languageCode,
+            scriptCode: locale.scriptCode ?? '',
+          )
+          .trim();
+
+      if (displayName.isNotEmpty) {
+        return displayName;
+      }
     }
 
     final email = user?.email?.trim() ?? '';
+
     return email.isNotEmpty
         ? email
         : AppLocalizations.of(context)!.get('unknownUser');

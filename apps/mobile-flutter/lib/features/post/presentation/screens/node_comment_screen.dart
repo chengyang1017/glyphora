@@ -106,6 +106,17 @@ class _CommentScreenState extends State<CommentScreen> {
     replyingToUser = null;
   }
 
+  String _displayNameOf(PostCommentModel comment) {
+    final locale = Localizations.localeOf(context);
+
+    return comment
+        .displayNameFor(
+          languageCode: locale.languageCode,
+          scriptCode: locale.scriptCode ?? '',
+        )
+        .trim();
+  }
+
   void _showSendError(Object error) {
     if (!mounted) return;
 
@@ -280,8 +291,11 @@ class _CommentScreenState extends State<CommentScreen> {
       );
     }
 
-    final name = comment.userName.trim();
-    final first = name.isEmpty ? 'G' : name.substring(0, 1).toUpperCase();
+    final name = _displayNameOf(comment);
+
+    final first = name.isEmpty
+        ? 'G'
+        : name.substring(0, 1).toUpperCase();
 
     return CircleAvatar(
       radius: radius,
@@ -299,6 +313,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
   Widget buildReplies(PostCommentModel comment) {
     final replies = comment.replies;
+    final parentDisplayName = _displayNameOf(comment);
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -319,6 +334,7 @@ class _CommentScreenState extends State<CommentScreen> {
           separatorBuilder: (_, _) => const SizedBox(height: 8),
           itemBuilder: (context, index) {
             final reply = replies[index];
+            final replyDisplayName = _displayNameOf(reply);
 
             return Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,28 +360,27 @@ class _CommentScreenState extends State<CommentScreen> {
                             ),
                             children: [
                               TextSpan(
-                                text: '${reply.userName} ',
+                                text: '$replyDisplayName ',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              if (reply.replyTo != null &&
-                                  reply.replyTo!.isNotEmpty) ...[
-                                TextSpan(
-                                  text: '${l10n.reply} ',
-                                  style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                    fontSize: 12,
+                              if (parentDisplayName.isNotEmpty) ...[
+                                  TextSpan(
+                                    text: '${l10n.reply} ',
+                                    style: TextStyle(
+                                      color: Colors.grey.shade500,
+                                      fontSize: 12,
+                                    ),
                                   ),
-                                ),
-                                TextSpan(
-                                  text: '@${reply.replyTo} ',
-                                  style: const TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.w500,
+                                  TextSpan(
+                                    text: '@$parentDisplayName ',
+                                    style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
                               TextSpan(text: reply.text),
                             ],
                           ),
@@ -448,6 +463,7 @@ class _CommentScreenState extends State<CommentScreen> {
         itemBuilder: (context, index) {
           final comment = _comments[index];
           final imageUrl = comment.imageUrl;
+          final commentDisplayName = _displayNameOf(comment);
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
@@ -464,7 +480,7 @@ class _CommentScreenState extends State<CommentScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            comment.userName,
+                            commentDisplayName,
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
@@ -506,7 +522,7 @@ class _CommentScreenState extends State<CommentScreen> {
                       onPressed: () {
                         setState(() {
                           replyingToCommentId = comment.id;
-                          replyingToUser = comment.userName;
+                          replyingToUser = commentDisplayName;
                         });
                         focusNode.requestFocus();
                       },

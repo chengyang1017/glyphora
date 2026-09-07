@@ -36,6 +36,12 @@ type UserWithProfileRelations = {
     scriptCode: string;
     level: number;
   }>;
+
+  localizedNames: Array<{
+    languageCode: string;
+    scriptCode: string;
+    name: string;
+  }>;
 };
 
 // ============================================================
@@ -95,6 +101,14 @@ function serializeUser(
           : {}),
 
         level: language.level,
+      }),
+    ),
+
+    localizedNames: user.localizedNames.map(
+      (localizedName) => ({
+        languageCode: localizedName.languageCode,
+        scriptCode: localizedName.scriptCode,
+        name: localizedName.name,
       }),
     ),
   };
@@ -288,6 +302,7 @@ userRouter.put(
         include: {
           tags: true,
           languages: true,
+          localizedNames: true,
         },
       });
 
@@ -346,6 +361,7 @@ userRouter.get(
           include: {
             tags: true,
             languages: true,
+            localizedNames: true,
           },
         });
 
@@ -435,29 +451,77 @@ const updateUserSchema = z.object({
     .optional(),
 
   languages: z
-    .array(
-      z.object({
-        name: z
-          .string()
-          .trim()
-          .min(1)
-          .max(32),
+  .array(
+    z.object({
+      name: z
+        .string()
+        .trim()
+        .min(1)
+        .max(32),
 
-        scriptCode: z
-          .string()
-          .trim()
-          .max(32)
-          .optional(),
+      scriptCode: z
+        .string()
+        .trim()
+        .max(32)
+        .optional(),
 
-        level: z
-          .number()
-          .int()
-          .min(0)
-          .max(100),
-      }),
-    )
-    .optional(),
+      level: z
+        .number()
+        .int()
+        .min(0)
+        .max(100),
+    }),
+  )
+  .optional(),
+
+localizedNames: z
+  .array(
+    z.object({
+      languageCode: z
+        .string()
+        .trim()
+        .min(1)
+        .max(32),
+
+      scriptCode: z
+        .string()
+        .trim()
+        .max(32)
+        .optional(),
+
+      name: z
+        .string()
+        .trim()
+        .min(1)
+        .max(100),
+    }),
+  )
+  .optional(),
 });
+
+localizedNames: z
+  .array(
+    z.object({
+      languageCode: z
+        .string()
+        .trim()
+        .min(1)
+        .max(32),
+
+      scriptCode: z
+        .string()
+        .trim()
+        .max(32)
+        .optional(),
+
+      name: z
+        .string()
+        .trim()
+        .min(1)
+        .max(100),
+    }),
+  )
+  .optional(),
 
 userRouter.patch(
   '/me',
@@ -481,6 +545,7 @@ userRouter.patch(
     const {
       tags,
       languages,
+      localizedNames,
       ...profileData
     } = parsed.data;
 
@@ -571,7 +636,41 @@ userRouter.patch(
             }
 
             // --------------------------------------------
-            // 4. 更新完成后重新读取完整 User
+// 4. 如果请求带 localizedNames
+//    就完整替换当前用户多语言名称
+// --------------------------------------------
+
+if (localizedNames !== undefined) {
+  await transaction.userLocalizedName.deleteMany({
+    where: {
+      userId: currentUser.id,
+    },
+  });
+
+  if (localizedNames.length > 0) {
+    await transaction.userLocalizedName.createMany({
+      data: localizedNames.map(
+        (localizedName) => ({
+          userId: currentUser.id,
+
+          languageCode:
+            localizedName.languageCode,
+
+          scriptCode:
+            localizedName.scriptCode ?? '',
+
+          name:
+            localizedName.name,
+        }),
+      ),
+
+      skipDuplicates: true,
+    });
+  }
+}
+
+            // --------------------------------------------
+            // 5. 更新完成后重新读取完整 User
             // --------------------------------------------
 
             return transaction.user.findUniqueOrThrow({
@@ -583,6 +682,7 @@ userRouter.patch(
               include: {
                 tags: true,
                 languages: true,
+                localizedNames: true,
               },
             });
           },
@@ -665,6 +765,7 @@ userRouter.get(
           include: {
             tags: true,
             languages: true,
+            localizedNames: true,
           },
         });
 

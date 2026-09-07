@@ -233,7 +233,7 @@ class _InterestedPostListState extends State<_InterestedPostList> {
         itemCount: posts.length,
         separatorBuilder: (_, _) => Divider(
           height: 1,
-          color: Theme.of(context).colorScheme.outlineVariant,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.08),
         ),
         itemBuilder: (context, index) {
           return PostItemCard(

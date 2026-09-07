@@ -61,26 +61,38 @@ class _UserNotesRouteScreenState extends State<UserNotesRouteScreen> {
   }
 
   Future<String> _resolveOtherUserName() async {
-    final unknownUser = AppLocalizations.of(context)!.get('unknownUser');
-    final user = await context.read<ProfileRepository>().getProfile(
-      widget.otherUserId,
-    );
+    final unknownUser =
+        AppLocalizations.of(context)!.get('unknownUser');
+
+    final user =
+        await context.read<ProfileRepository>().getProfile(
+          widget.otherUserId,
+        );
 
     if (user == null) {
       return unknownUser;
     }
 
-    final nickname = user.nickname?.trim() ?? '';
-    final username = user.username.trim();
-    final email = user.email?.trim() ?? '';
+    final locale = Localizations.localeOf(context);
 
-    if (nickname.isNotEmpty) {
-      return nickname;
+    final displayName = user
+        .displayNameFor(
+          languageCode: locale.languageCode,
+          scriptCode: locale.scriptCode ?? '',
+        )
+        .trim();
+
+    if (displayName.isNotEmpty) {
+      return displayName;
     }
+
+    final username = user.username.trim();
 
     if (username.isNotEmpty) {
       return username;
     }
+
+    final email = user.email?.trim() ?? '';
 
     if (email.isNotEmpty) {
       return email;

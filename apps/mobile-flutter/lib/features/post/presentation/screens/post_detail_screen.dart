@@ -1136,6 +1136,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   }
 
   AppBar _buildAppBar(bool isOwner) {
+    final globalBookmarked =
+        context.watch<PostCubit>().bookmarkState(
+          widget.postId,
+          fallback: _isBookmarked,
+        );
+
     return AppBar(
       title: Text(
         context.l10n.details,
@@ -1146,6 +1152,19 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       foregroundColor: Theme.of(context).colorScheme.onSurface,
       actions: [
+        IconButton(
+          tooltip: context.l10n.bookmark,
+          onPressed:
+              _isBookmarkBusy ? null : _toggleBookmark,
+          icon: Icon(
+            globalBookmarked
+                ? Icons.bookmark_rounded
+                : Icons.bookmark_border_rounded,
+            color: globalBookmarked
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
         if (isOwner && _images.length > 1)
           IconButton(
             icon: Icon(
@@ -1527,10 +1546,14 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   // 帖子内容
   // ============================================================
   Widget _buildContent() {
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
+
     final title = _post.title?.trim() ?? '';
     final content = _post.content?.trim() ?? '';
     final userId = _post.userId ?? '';
     final category = _post.category ?? '';
+
     final primaryLanguageCode =
         _post.primaryLanguageCode ??
         widget.post.primaryLanguageCode ??
@@ -1540,101 +1563,143 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
 
     final isPrimaryLanguage = currentLanguageCode == primaryLanguageCode;
 
+    final publishedText = isPrimaryLanguage
+        ? _formatTimestamp(_post.createdAt)
+        : _currentVersionCreatedAt == null
+        ? context.l10n.translationVersion
+        : context.l10n.translationPublishedAt(
+            _formatVersionTimestamp(_currentVersionCreatedAt!),
+          );
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 36),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (category.isNotEmpty)
+          // ==========================
+          // 标签
+          // ==========================
+          if (category.isNotEmpty) ...[
             Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Text(
-                  "# $category",
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF475569),
-                    fontWeight: FontWeight.w600,
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+              decoration: BoxDecoration(
+                color: colors.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                '# $category',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: colors.onSurfaceVariant,
                 ),
               ),
             ),
-          if (_availableLanguageVersions.length > 1) ...[
-            _buildLanguageVersionSwitcher(),
-            const SizedBox(height: 16),
+            const SizedBox(height: 18),
           ],
+
+          // ==========================
+          // 语言版本
+          // ==========================
+          _buildLanguageVersionSwitcher(),
+          const SizedBox(height: 24),
+
+          // ==========================
+          // 标题
+          // ==========================
           if (title.isNotEmpty) ...[
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF0F172A),
-                height: 1.3,
+              style: TextStyle(
+                fontSize: 28,
+                height: 1.22,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.4,
+                color: colors.onSurface,
               ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 22),
           ],
-          Row(
-            children: [
-              if (userId.isNotEmpty)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: UserNameDisplay(uid: userId),
-                ),
-              const SizedBox(width: 12),
-              const Icon(
-                Icons.space_dashboard_outlined,
-                size: 3,
-                color: Colors.grey,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                isPrimaryLanguage
-                    ? _formatTimestamp(_post.createdAt)
-                    : _currentVersionCreatedAt == null
-                    ? context.l10n.translationVersion
-                    : context.l10n.translationPublishedAt(
-                        _formatVersionTimestamp(_currentVersionCreatedAt!),
-                      ),
-                style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 13),
-              ),
-            ],
-          ),
-          if (_post.updatedAt != null &&
-              _post.updatedAt != _post.createdAt) ...[
-            const SizedBox(height: 6),
-            Row(
-              children: [
-                const Icon(
-                  Icons.history_toggle_off_rounded,
-                  size: 13,
-                  color: Color(0xFFF59E0B),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  context.l10n.modifiedAt(_formatTimestamp(_post.updatedAt)),
-                  style: const TextStyle(
-                    color: Color(0xFFD97706),
-                    fontSize: 12,
-                    fontStyle: FontStyle.italic,
+
+          // ==========================
+          // 作者 + 版本信息
+          // ==========================
+          // ==========================
+          // 作者
+          // ==========================
+          if (userId.isNotEmpty)
+            UserNameDisplay(uid: userId),
+
+          const SizedBox(height: 10),
+
+          SizedBox(
+            width: double.infinity,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    publishedText,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      height: 1.35,
+                      color: colors.onSurfaceVariant,
+                    ),
                   ),
-                ),
-              ],
+
+                  if (_post.updatedAt != null &&
+                      _post.updatedAt != _post.createdAt) ...[
+                    const SizedBox(width: 8),
+
+                    Text(
+                      '·',
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: colors.onSurfaceVariant,
+                      ),
+                    ),
+
+                    const SizedBox(width: 8),
+
+                    Icon(
+                      Icons.history_rounded,
+                      size: 13,
+                      color: colors.tertiary,
+                    ),
+
+                    const SizedBox(width: 4),
+
+                    Text(
+                      context.l10n.modifiedAt(
+                        _formatTimestamp(_post.updatedAt),
+                      ),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontStyle: FontStyle.italic,
+                        color: colors.tertiary,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
-          ],
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Divider(color: Color(0xFFF1F5F9), thickness: 1),
           ),
+
+          const SizedBox(height: 22),
+
+          Divider(
+            height: 1,
+            thickness: 1,
+            color: colors.outlineVariant.withValues(alpha: 0.6),
+          ),
+
+          const SizedBox(height: 26),
+
+          // ==========================
+          // 正文
+          // ==========================
           if (_post.bodyDelta.isNotEmpty)
             _PostRichBody(
               key: ValueKey(
@@ -1647,14 +1712,13 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
           else
             Text(
               content.isNotEmpty ? content : context.l10n.noContent,
-              style: const TextStyle(
-                fontSize: 16,
-                height: 1.7,
-                color: Color(0xFF334155),
-                letterSpacing: 0.2,
+              style: TextStyle(
+                fontSize: 16.5,
+                height: 1.75,
+                letterSpacing: 0.1,
+                color: colors.onSurface.withValues(alpha: 0.90),
               ),
             ),
-          const SizedBox(height: 32),
         ],
       ),
     );
@@ -1664,10 +1728,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   // 底部操作栏
   // ============================================================
   Widget _buildBottomBar() {
-    final globalBookmarked = context.watch<PostCubit>().bookmarkState(
-      widget.postId,
-      fallback: _isBookmarked,
-    );
 
     return Container(
       decoration: BoxDecoration(
@@ -1711,28 +1771,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               ),
               Expanded(
                 child: _buildBottomAction(
-                  onTap: _isBookmarkBusy ? null : _toggleBookmark,
-                  child: _buildAction(
-                    globalBookmarked
-                        ? Icons.bookmark_rounded
-                        : Icons.bookmark_border_rounded,
-                    context.l10n.bookmark,
-                    globalBookmarked,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: _buildBottomAction(
-                  onTap: _openTranslation,
-                  child: _buildAction(
-                    Icons.translate_rounded,
-                    context.l10n.translate,
-                    false,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: _buildBottomAction(
                   onTap: _showShareOptions,
                   child: _buildAction(
                     Icons.ios_share_rounded,
@@ -1765,20 +1803,27 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   }
 
   Widget _buildAction(IconData icon, String text, bool active) {
-    final activeColor = const Color(0xFFF43F5E);
-    final inactiveColor = const Color(0xFF64748B);
+    final colors = Theme.of(context).colorScheme;
 
-    return Row(
+    final activeColor = colors.primary;
+    final inactiveColor = colors.onSurfaceVariant;
+
+    final color = active ? activeColor : inactiveColor;
+
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 20, color: active ? activeColor : inactiveColor),
-        const SizedBox(width: 6),
+        Icon(icon, size: 21, color: color),
+        const SizedBox(height: 4),
         Text(
           text,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: 14,
-            color: active ? activeColor : inactiveColor,
-            fontWeight: active ? FontWeight.bold : FontWeight.w500,
+            fontSize: 11,
+            height: 1,
+            color: color,
+            fontWeight: active ? FontWeight.w700 : FontWeight.w500,
           ),
         ),
       ],
@@ -1786,42 +1831,541 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   }
 
   Widget _buildLanguageVersionSwitcher() {
-    final languages = _availableLanguageVersions;
+  final languages = _availableLanguageVersions;
 
-    if (languages.length <= 1) {
-      return const SizedBox.shrink();
+  if (languages.isEmpty) {
+    return const SizedBox.shrink();
+  }
+
+  final colors = Theme.of(context).colorScheme;
+
+  final currentLanguageCode =
+      _post.languageCode ?? _post.primaryLanguageCode;
+
+  final primaryLanguageCode =
+      _post.primaryLanguageCode;
+
+  final uiLanguageCode =
+      Localizations.localeOf(context).languageCode;
+
+  // ==========================
+  // 排序：
+  // 当前语言 -> 主语言 -> 其他语言
+  // ==========================
+  final orderedLanguages = <LanguageConfig>[];
+
+  void addLanguage(String? code) {
+    if (code == null) return;
+
+    for (final language in languages) {
+      if (language.code == code &&
+          !orderedLanguages.any(
+            (item) => item.code == code,
+          )) {
+        orderedLanguages.add(language);
+        return;
+      }
     }
+  }
 
-    final currentLanguageCode = _post.languageCode ?? _post.primaryLanguageCode;
+  addLanguage(currentLanguageCode);
+  addLanguage(primaryLanguageCode);
 
-    final primaryLanguageCode = _post.primaryLanguageCode;
+  for (final language in languages) {
+    if (!orderedLanguages.any(
+      (item) => item.code == language.code,
+    )) {
+      orderedLanguages.add(language);
+    }
+  }
 
-    final uiLanguageCode = Localizations.localeOf(context).languageCode;
+  Widget languageChip(LanguageConfig language) {
+    final selected =
+        language.code == currentLanguageCode;
 
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: languages.map((language) {
-        final selected = language.code == currentLanguageCode;
+    final isPrimary =
+        language.code == primaryLanguageCode;
 
-        final isPrimary = language.code == primaryLanguageCode;
+    final name = language.nameOf(uiLanguageCode);
 
-        return ChoiceChip(
-          selected: selected,
-          label: Text(
-            isPrimary
-                ? '${language.nameOf(uiLanguageCode)} · ${context.l10n.mainLanguage}'
-                : language.nameOf(uiLanguageCode),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          if (!selected) {
+            _switchLanguageVersion(language);
+          }
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          height: 38,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 13,
           ),
-          onSelected: selected
-              ? null
-              : (_) {
-                  _switchLanguageVersion(language);
-                },
-        );
-      }).toList(),
+          decoration: BoxDecoration(
+            color: selected
+                ? colors.primary
+                : colors.surface,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: selected
+                  ? colors.primary
+                  : colors.outlineVariant,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (selected) ...[
+                const Icon(
+                  Icons.check_rounded,
+                  size: 16,
+                  color: Colors.white,
+                ),
+                const SizedBox(width: 6),
+              ],
+
+              Text(
+                name,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: selected
+                      ? FontWeight.w600
+                      : FontWeight.w500,
+                  color: selected
+                      ? Colors.white
+                      : colors.onSurface,
+                ),
+              ),
+
+              if (isPrimary) ...[
+                const SizedBox(width: 7),
+
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: selected
+                        ? Colors.white.withValues(
+                            alpha: 0.18,
+                          )
+                        : colors.primaryContainer,
+                    borderRadius:
+                        BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    context.l10n.mainLanguage,
+                    style: TextStyle(
+                      fontSize: 9.5,
+                      fontWeight: FontWeight.w600,
+                      color: selected
+                          ? Colors.white
+                          : colors.onPrimaryContainer,
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
     );
   }
+
+  return Container(
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: colors.surfaceContainerLow,
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(
+        color: colors.outlineVariant.withValues(
+          alpha: 0.55,
+        ),
+      ),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // ==========================
+        // 顶部：全部语言 + 翻译
+        // ==========================
+        Row(
+          children: [
+            Expanded(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius:
+                      BorderRadius.circular(10),
+                  onTap: _showLanguageVersionsSheet,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(
+                      vertical: 7,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.language_rounded,
+                          size: 19,
+                          color:
+                              colors.onSurfaceVariant,
+                        ),
+                        const SizedBox(width: 7),
+
+                        Flexible(
+                          child: Text(
+                            context.l10n.selectLanguage,
+                            maxLines: 1,
+                            overflow:
+                                TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 13.5,
+                              fontWeight:
+                                  FontWeight.w600,
+                              color: colors.onSurface,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 6),
+
+                        Container(
+                          padding:
+                              const EdgeInsets.symmetric(
+                            horizontal: 7,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: colors
+                                .surfaceContainerHighest,
+                            borderRadius:
+                                BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            '${languages.length}',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight:
+                                  FontWeight.w600,
+                              color: colors
+                                  .onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 2),
+
+                        Icon(
+                          Icons
+                              .keyboard_arrow_down_rounded,
+                          size: 18,
+                          color:
+                              colors.onSurfaceVariant,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(width: 8),
+
+            FilledButton.tonalIcon(
+              onPressed: _openTranslation,
+              icon: const Icon(
+                Icons.translate_rounded,
+                size: 17,
+              ),
+              label: Text(
+                context.l10n.translate,
+                style: const TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(0, 38),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(11),
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 10),
+
+        // ==========================
+        // 所有语言版本：只横向滑
+        // ==========================
+        SizedBox(
+          height: 38,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            physics:
+                const BouncingScrollPhysics(),
+            itemCount: orderedLanguages.length,
+            separatorBuilder: (_, _) =>
+                const SizedBox(width: 8),
+            itemBuilder: (context, index) {
+              return languageChip(
+                orderedLanguages[index],
+              );
+            },
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Future<void> _showLanguageVersionsSheet() async {
+  final languages = _availableLanguageVersions;
+
+  final currentLanguageCode =
+      _post.languageCode ?? _post.primaryLanguageCode;
+
+  final primaryLanguageCode =
+      _post.primaryLanguageCode;
+
+  final uiLanguageCode =
+      Localizations.localeOf(context).languageCode;
+
+  String query = '';
+
+  await showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (sheetContext) {
+      return StatefulBuilder(
+        builder: (context, setSheetState) {
+          final normalizedQuery =
+              query.trim().toLowerCase();
+
+          final filtered = languages.where(
+            (language) {
+              final name = language
+                  .nameOf(uiLanguageCode)
+                  .toLowerCase();
+
+              return normalizedQuery.isEmpty ||
+                  name.contains(normalizedQuery) ||
+                  language.code
+                      .toLowerCase()
+                      .contains(normalizedQuery);
+            },
+          ).toList();
+
+          return SafeArea(
+            child: SizedBox(
+              height:
+                  MediaQuery.sizeOf(context).height *
+                      0.72,
+              child: Column(
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.fromLTRB(
+                      20,
+                      4,
+                      20,
+                      14,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            context.l10n
+                                .selectLanguage,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontWeight:
+                                      FontWeight.w700,
+                                ),
+                          ),
+                        ),
+
+                        Container(
+                          padding:
+                              const EdgeInsets.symmetric(
+                            horizontal: 9,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest,
+                            borderRadius:
+                                BorderRadius.circular(
+                              20,
+                            ),
+                          ),
+                          child: Text(
+                            '${languages.length}',
+                            style: const TextStyle(
+                              fontWeight:
+                                  FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(
+                      horizontal: 20,
+                    ),
+                    child: TextField(
+                      onChanged: (value) {
+                        setSheetState(() {
+                          query = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(
+                          Icons.search_rounded,
+                        ),
+                        hintText:
+                            context.l10n.selectLanguage,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(
+                            14,
+                          ),
+                          borderSide:
+                              BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: filtered.length,
+                      itemBuilder:
+                          (context, index) {
+                        final language =
+                            filtered[index];
+
+                        final selected =
+                            language.code ==
+                                currentLanguageCode;
+
+                        final isPrimary =
+                            language.code ==
+                                primaryLanguageCode;
+
+                        return ListTile(
+                          leading: Container(
+                            width: 36,
+                            height: 36,
+                            alignment:
+                                Alignment.center,
+                            decoration:
+                                BoxDecoration(
+                              color: selected
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainerHighest,
+                              borderRadius:
+                                  BorderRadius.circular(
+                                10,
+                              ),
+                            ),
+                            child: Icon(
+                              selected
+                                  ? Icons
+                                      .check_rounded
+                                  : Icons
+                                      .language_rounded,
+                              size: 19,
+                              color: selected
+                                  ? Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .onSurfaceVariant,
+                            ),
+                          ),
+
+                          title: Text(
+                            language.nameOf(
+                              uiLanguageCode,
+                            ),
+                            style: TextStyle(
+                              fontWeight: selected
+                                  ? FontWeight.w700
+                                  : FontWeight.w500,
+                            ),
+                          ),
+
+                          subtitle: isPrimary
+                              ? Text(
+                                  context
+                                      .l10n.mainLanguage,
+                                )
+                              : null,
+
+                          trailing: selected
+                              ? Icon(
+                                  Icons
+                                      .check_circle_rounded,
+                                  color: Theme.of(
+                                    context,
+                                  )
+                                      .colorScheme
+                                      .primary,
+                                )
+                              : null,
+
+                          onTap: () {
+                            Navigator.pop(
+                              sheetContext,
+                            );
+
+                            if (!selected) {
+                              _switchLanguageVersion(
+                                language,
+                              );
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+
 }
 
 class _PostRichBody extends StatefulWidget {

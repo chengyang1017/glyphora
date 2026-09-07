@@ -75,9 +75,13 @@ class _AllNotesScreenState extends State<AllNotesScreen> {
       }
 
       setState(() {
+        final locale = Localizations.localeOf(context);
+
         _usersById[userId] = _SharedUser.fromUserModel(
           user,
           fallbackName: context.l10n.user,
+          languageCode: locale.languageCode,
+          scriptCode: locale.scriptCode ?? '',
         );
       });
     } catch (error) {
@@ -1610,8 +1614,16 @@ class _SharedUser {
   factory _SharedUser.fromUserModel(
     UserModel user, {
     required String fallbackName,
+    required String languageCode,
+    required String scriptCode,
   }) {
-    final name = user.profileDisplayName.trim();
+    final name = user
+        .displayNameFor(
+          languageCode: languageCode,
+          scriptCode: scriptCode,
+        )
+        .trim();
+
     final avatarUrl = user.avatarUrl.trim();
 
     return _SharedUser(

@@ -36,10 +36,13 @@ import 'features/profile/domain/repositories/profile_repository.dart';
 import 'features/social/domain/repositories/follow_repository.dart';
 import 'features/social/domain/repositories/friend_repository.dart';
 import 'features/social/presentation/cubit/friend_cubit.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   final dependencies = AppDependencies.create();
 

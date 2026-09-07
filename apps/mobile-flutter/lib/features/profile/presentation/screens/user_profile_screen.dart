@@ -314,9 +314,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final username = user.username.isNotEmpty
         ? user.username
         : l10n.get('unknownUser');
-    final nickname = user.nicknameText;
-    final displayName = user.profileDisplayName.isNotEmpty
-        ? user.profileDisplayName
+
+    final locale = Localizations.localeOf(context);
+
+    final resolvedName = user
+        .displayNameFor(
+          languageCode: locale.languageCode,
+          scriptCode: locale.scriptCode ?? '',
+        )
+        .trim();
+
+    final displayName = resolvedName.isNotEmpty
+        ? resolvedName
         : username;
     final avatarUrl = user.avatarUrl;
     final bio = user.bioText;
@@ -332,7 +341,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         foregroundColor: Theme.of(context).colorScheme.onSurface,
         centerTitle: true,
         title: Text(
-          nickname.isNotEmpty ? nickname : '@$username',
+          displayName,
           style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
         ),
         actions: [
@@ -378,7 +387,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     theme: theme,
                     user: user,
                     username: username,
-                    nickname: nickname,
                     displayName: displayName,
                     avatarUrl: avatarUrl,
                     postCount: posts.length,
@@ -454,7 +462,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     required ThemeData theme,
     required UserModel user,
     required String username,
-    required String nickname,
     required String displayName,
     required String avatarUrl,
     required int postCount,
@@ -474,20 +481,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           _buildAvatar(avatarUrl, displayName, theme),
           const SizedBox(height: 16),
           Text(
-            nickname.isNotEmpty ? nickname : '@$username',
-            style: TextStyle(
+              displayName,
+              style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          if (nickname.isNotEmpty) ...[
-            const SizedBox(height: 4),
-            Text(
-              '@$username',
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
-            ),
-          ],
+          const SizedBox(height: 4),
+          Text(
+            '@$username',
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+          ),
+          
           if (showPublicAge) ...[
             const SizedBox(height: 6),
             Row(

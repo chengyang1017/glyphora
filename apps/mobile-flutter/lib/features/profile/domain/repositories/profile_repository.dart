@@ -20,6 +20,11 @@ abstract interface class ProfileRepository {
     required List<Map<String, dynamic>> languages,
   });
 
+  Future<UserModel> updateLocalizedNames({
+    required String userId,
+    required List<Map<String, dynamic>> localizedNames,
+  });
+
   Future<UserModel> updateBirthday({
     required String userId,
     required DateTime? birthday,

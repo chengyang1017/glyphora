@@ -28,6 +28,17 @@ final class FirestoreDiscoverRepository implements DiscoverRepository {
         : const <String, dynamic>{};
     final username = data['username']?.toString() ?? '用户';
     final nickname = data['nickname']?.toString() ?? '';
+    final localizedNamesRaw = data['localizedNames'];
+
+    final localizedNames = localizedNamesRaw is List
+        ? localizedNamesRaw
+              .whereType<Map>()
+              .map(
+                (item) =>
+                    Map<String, dynamic>.from(item),
+              )
+              .toList(growable: false)
+        : const <Map<String, dynamic>>[];
     final avatarUrl =
         data['avatar']?.toString() ??
         data['avatarUrl']?.toString() ??
@@ -39,6 +50,7 @@ final class FirestoreDiscoverRepository implements DiscoverRepository {
       username: username,
       nickname: nickname,
       avatarUrl: avatarUrl,
+      localizedNames: localizedNames,
     );
   }
 }

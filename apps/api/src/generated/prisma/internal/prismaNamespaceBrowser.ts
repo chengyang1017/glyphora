@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   UserTag: 'UserTag',
   UserLanguage: 'UserLanguage',
+  UserLocalizedName: 'UserLocalizedName',
   Post: 'Post',
   PostVersion: 'PostVersion',
   PostImage: 'PostImage',
@@ -122,6 +123,19 @@ export const UserLanguageScalarFieldEnum = {
 } as const
 
 export type UserLanguageScalarFieldEnum = (typeof UserLanguageScalarFieldEnum)[keyof typeof UserLanguageScalarFieldEnum]
+
+
+export const UserLocalizedNameScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserLocalizedNameScalarFieldEnum = (typeof UserLocalizedNameScalarFieldEnum)[keyof typeof UserLocalizedNameScalarFieldEnum]
 
 
 export const PostScalarFieldEnum = {

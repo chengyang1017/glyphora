@@ -57,6 +57,11 @@ export type UserTag = Prisma.UserTagModel
  */
 export type UserLanguage = Prisma.UserLanguageModel
 /**
+ * Model UserLocalizedName
+ * 
+ */
+export type UserLocalizedName = Prisma.UserLocalizedNameModel
+/**
  * Model Post
  * 
  */

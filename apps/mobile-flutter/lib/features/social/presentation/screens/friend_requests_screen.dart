@@ -68,9 +68,18 @@ class FriendRequestsScreen extends StatelessWidget {
                   }
 
                   final user = userSnapshot.data;
+                  final locale = Localizations.localeOf(context);
+
+                  final resolvedName = user
+                      ?.displayNameFor(
+                        languageCode: locale.languageCode,
+                        scriptCode: locale.scriptCode ?? '',
+                      )
+                      .trim();
+
                   final displayName =
-                      user?.profileDisplayName.isNotEmpty == true
-                      ? user!.profileDisplayName
+                      resolvedName != null && resolvedName.isNotEmpty
+                      ? resolvedName
                       : l10n.get('unknownUser');
                   final avatarUrl = user?.avatarUrl ?? '';
                   final initial = displayName.isEmpty

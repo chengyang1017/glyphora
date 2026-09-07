@@ -74,6 +74,25 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
+  Future<void> updateLocalizedNames(
+    String uid,
+    List<Map<String, dynamic>> newLocalizedNames,
+  ) {
+    final copiedLocalizedNames = newLocalizedNames
+        .map((item) => Map<String, dynamic>.from(item))
+        .toList(growable: false);
+
+    return _commitOptimistic(
+      optimistic: state.userProfile.copyWith(
+        localizedNames: copiedLocalizedNames,
+      ),
+      persist: () => _profileRepository.updateLocalizedNames(
+        userId: uid,
+        localizedNames: copiedLocalizedNames,
+      ),
+    );
+  }
+
   Future<void> updateBirthday(
     String uid,
     DateTime? newBirthday,

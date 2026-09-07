@@ -20,6 +20,7 @@ final class UserModelMapper {
       friendRequests: _stringList(data['friendRequests']),
       tags: _stringList(data['tags']),
       languages: _languages(data['languages']),
+      localizedNames: _localizedNames(data['localizedNames']),
       birthday: _dateTime(data['birthday']),
       showAge: data['showAge'] is bool ? data['showAge'] as bool : true,
       createdAt: _dateTime(data['createdAt']),
@@ -41,6 +42,7 @@ final class UserModelMapper {
       'friendRequests': user.friendRequests,
       'tags': user.tags,
       'languages': user.languages,
+      'localizedNames': user.localizedNames,
       'birthday': _timestamp(user.birthday),
       'showAge': user.showAge,
       'createdAt': _timestamp(user.createdAt),
@@ -72,6 +74,25 @@ final class UserModelMapper {
           if (item is String) {
             return {'name': item, 'level': 70};
           }
+          return <String, dynamic>{};
+        })
+        .where((item) => item.isNotEmpty)
+        .toList(growable: false);
+
+    return result;
+  }
+
+  static List<Map<String, dynamic>>? _localizedNames(Object? value) {
+    if (value is! List) {
+      return null;
+    }
+
+    final result = value
+        .map<Map<String, dynamic>>((item) {
+          if (item is Map) {
+            return Map<String, dynamic>.from(item);
+          }
+
           return <String, dynamic>{};
         })
         .where((item) => item.isNotEmpty)

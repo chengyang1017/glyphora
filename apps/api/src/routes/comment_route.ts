@@ -11,6 +11,12 @@ type CommentAuthor = {
   username: string;
   nickname: string | null;
   avatarUrl: string | null;
+
+  localizedNames: Array<{
+    languageCode: string;
+    scriptCode: string;
+    name: string;
+  }>;
 };
 
 type SerializedComment = {
@@ -18,6 +24,13 @@ type SerializedComment = {
   uid: string | null;
   user: string;
   avatarUrl: string | null;
+
+  localizedNames: Array<{
+    languageCode: string;
+    scriptCode: string;
+    name: string;
+  }>;
+
   text: string;
   imageUrl: string | null;
   replyTo: string | null;
@@ -41,6 +54,14 @@ const authorSelect = {
   username: true,
   nickname: true,
   avatarUrl: true,
+
+  localizedNames: {
+    select: {
+      languageCode: true,
+      scriptCode: true,
+      name: true,
+    },
+  },
 } as const;
 
 function authorDisplayName(
@@ -85,7 +106,20 @@ function serializeComment(
       comment.author?.avatarUrl ??
       null,
 
+    localizedNames:
+      comment.author?.localizedNames.map(
+        (localizedName) => ({
+          languageCode:
+            localizedName.languageCode,
+          scriptCode:
+            localizedName.scriptCode,
+          name:
+            localizedName.name,
+        }),
+      ) ?? [],
+
     text: comment.text,
+
     imageUrl: comment.imageUrl,
     replyTo: comment.replyTo,
 
@@ -144,6 +178,14 @@ async function findCurrentUser(
       username: true,
       nickname: true,
       avatarUrl: true,
+
+      localizedNames: {
+        select: {
+          languageCode: true,
+          scriptCode: true,
+          name: true,
+        },
+      },
     },
   });
 }

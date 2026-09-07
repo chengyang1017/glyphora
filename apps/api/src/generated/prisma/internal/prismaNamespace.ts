@@ -400,6 +400,7 @@ export const ModelName = {
   User: 'User',
   UserTag: 'UserTag',
   UserLanguage: 'UserLanguage',
+  UserLocalizedName: 'UserLocalizedName',
   Post: 'Post',
   PostVersion: 'PostVersion',
   PostImage: 'PostImage',
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userTag" | "userLanguage" | "post" | "postVersion" | "postImage" | "postLike" | "postBookmark" | "postReport" | "postComment" | "postEditHistory"
+    modelProps: "user" | "userTag" | "userLanguage" | "userLocalizedName" | "post" | "postVersion" | "postImage" | "postLike" | "postBookmark" | "postReport" | "postComment" | "postEditHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -646,6 +647,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserLanguageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserLanguageCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserLocalizedName: {
+      payload: Prisma.$UserLocalizedNamePayload<ExtArgs>
+      fields: Prisma.UserLocalizedNameFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserLocalizedNameFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserLocalizedNameFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>
+        }
+        findFirst: {
+          args: Prisma.UserLocalizedNameFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserLocalizedNameFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>
+        }
+        findMany: {
+          args: Prisma.UserLocalizedNameFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>[]
+        }
+        create: {
+          args: Prisma.UserLocalizedNameCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>
+        }
+        createMany: {
+          args: Prisma.UserLocalizedNameCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserLocalizedNameCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>[]
+        }
+        delete: {
+          args: Prisma.UserLocalizedNameDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>
+        }
+        update: {
+          args: Prisma.UserLocalizedNameUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserLocalizedNameDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserLocalizedNameUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserLocalizedNameUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserLocalizedNameUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLocalizedNamePayload>
+        }
+        aggregate: {
+          args: Prisma.UserLocalizedNameAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserLocalizedName>
+        }
+        groupBy: {
+          args: Prisma.UserLocalizedNameGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLocalizedNameGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserLocalizedNameCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLocalizedNameCountAggregateOutputType> | number
         }
       }
     }
@@ -1324,6 +1399,19 @@ export const UserLanguageScalarFieldEnum = {
 export type UserLanguageScalarFieldEnum = (typeof UserLanguageScalarFieldEnum)[keyof typeof UserLanguageScalarFieldEnum]
 
 
+export const UserLocalizedNameScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserLocalizedNameScalarFieldEnum = (typeof UserLocalizedNameScalarFieldEnum)[keyof typeof UserLocalizedNameScalarFieldEnum]
+
+
 export const PostScalarFieldEnum = {
   id: 'id',
   firestoreId: 'firestoreId',
@@ -1728,6 +1816,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   userTag?: Prisma.UserTagOmit
   userLanguage?: Prisma.UserLanguageOmit
+  userLocalizedName?: Prisma.UserLocalizedNameOmit
   post?: Prisma.PostOmit
   postVersion?: Prisma.PostVersionOmit
   postImage?: Prisma.PostImageOmit

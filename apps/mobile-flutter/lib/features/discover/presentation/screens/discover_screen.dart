@@ -35,6 +35,21 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     }
   }
 
+  String _displayNameOf(DiscoverUser user) {
+    final locale = Localizations.localeOf(context);
+
+    final displayName = user
+        .displayNameFor(
+          languageCode: locale.languageCode,
+          scriptCode: locale.scriptCode ?? '',
+        )
+        .trim();
+
+    return displayName.isNotEmpty
+        ? displayName
+        : user.username;
+  }
+
   Future<void> _startChat(DiscoverUser user) async {
     try {
       final discoverCubit = context.read<DiscoverCubit>();
@@ -42,7 +57,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       if (!mounted) return;
       context.push(
         AppRoutes.chatLocation(chatId: chatId),
-        extra: user.displayName,
+        extra: _displayNameOf(user),
       );
     } catch (error) {
       if (!mounted) return;
@@ -65,7 +80,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            l10n.getWithArgs('friendRequestSentTo', {'name': user.displayName}),
+            l10n.getWithArgs('friendRequestSentTo', {'name': _displayNameOf(user)}),
           ),
           backgroundColor: Colors.green,
         ),
@@ -161,6 +176,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
           itemBuilder: (context, index) {
             final user = users[index];
+            final displayName = _displayNameOf(user);
 
             return InkWell(
               onTap: () => _navigateToProfile(user.id),
@@ -173,7 +189,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   children: [
                     UserAvatar(
                       imageUrl: user.avatarUrl,
-                      displayName: user.displayName,
+                      displayName: displayName,
                       radius: 24,
                     ),
                     const SizedBox(width: 14),
@@ -182,14 +198,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            user.displayName,
+                            displayName,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
-                          if (user.nickname.isNotEmpty)
+                          if (user.username.isNotEmpty &&
+                              displayName != user.username)
                             Text(
                               '@${user.username}',
                               style: TextStyle(

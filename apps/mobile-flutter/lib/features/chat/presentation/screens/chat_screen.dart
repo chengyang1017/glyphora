@@ -89,7 +89,15 @@ class _ChatRouteScreenState extends State<ChatRouteScreen> {
       return context.l10n.unknownUser;
     }
 
-    final displayName = user.profileDisplayName.trim();
+    final locale = Localizations.localeOf(context);
+
+    final displayName = user
+        .displayNameFor(
+          languageCode: locale.languageCode,
+          scriptCode: locale.scriptCode ?? '',
+        )
+        .trim();
+
     if (displayName.isNotEmpty) {
       return displayName;
     }

@@ -18,6 +18,7 @@ import '../cubit/profile_cubit.dart';
 import '../cubit/profile_state.dart';
 import '../widgets/birthday_editor_dialog.dart';
 import '../widgets/language_editor_sheet.dart';
+import '../widgets/nickname_editor_sheet.dart';
 import '../widgets/profile_bio_tags_section.dart';
 import '../widgets/profile_header.dart';
 import '../widgets/profile_language_section.dart';
@@ -210,48 +211,94 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     final userId = _userId;
     if (userId == null) return;
 
-    final controller = TextEditingController(
-      text: _profileCubit.state.nickname,
-    );
-    final newNickname = await showDialog<String>(
+    final profile = _profileCubit.state;
+
+    final result = await showNicknameEditorSheet(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(context.l10n.editNicknameTitle),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: context.l10n.newNicknameLabel,
-            hintText: context.l10n.nicknameHint,
-            border: OutlineInputBorder(),
-          ),
-          autofocus: true,
-          maxLength: 20,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(context.l10n.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, controller.text.trim()),
-            child: Text(context.l10n.save),
-          ),
-        ],
-      ),
+      nickname: profile.nickname,
+      localizedNames: profile.localizedNames,
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.dispose();
-    });
+    // 取消、点击外面、按返回键都会得到 null
+    if (!mounted || result == null) return;
 
-    if (newNickname == null) return;
+    final nicknameChanged =
+        result.nickname != profile.nickname;
+
+    final localizedNamesChanged =
+        !_localizedNamesEqual(
+          result.localizedNames,
+          profile.localizedNames,
+        );
 
     try {
-      await _profileCubit.updateNickname(userId, newNickname);
+      if (nicknameChanged) {
+        await _profileCubit.updateNickname(
+          userId,
+          result.nickname,
+        );
+      }
+
+      if (localizedNamesChanged) {
+        await _profileCubit.updateLocalizedNames(
+          userId,
+          result.localizedNames,
+        );
+      }
+
       _showSuccess(context.l10n.nicknameUpdated);
     } catch (e) {
-      _showError('${context.l10n.updateFailed}: $e');
+      _showError(
+        '${context.l10n.updateFailed}: $e',
+      );
     }
+  }
+
+  bool _localizedNamesEqual(
+    List<Map<String, dynamic>> first,
+    List<Map<String, dynamic>> second,
+  ) {
+    if (first.length != second.length) {
+      return false;
+    }
+
+    String keyOf(Map<String, dynamic> item) {
+      final languageCode =
+          item['languageCode']
+              ?.toString()
+              .trim()
+              .toLowerCase() ??
+          '';
+
+      final scriptCode =
+          item['scriptCode']
+              ?.toString()
+              .trim()
+              .toLowerCase() ??
+          '';
+
+      final name =
+          item['name']
+              ?.toString()
+              .trim() ??
+          '';
+
+      return '$languageCode|$scriptCode|$name';
+    }
+
+    final firstKeys =
+        first.map(keyOf).toList()..sort();
+
+    final secondKeys =
+        second.map(keyOf).toList()..sort();
+
+    for (var i = 0; i < firstKeys.length; i++) {
+      if (firstKeys[i] != secondKeys[i]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   Future<void> editUsername() async {

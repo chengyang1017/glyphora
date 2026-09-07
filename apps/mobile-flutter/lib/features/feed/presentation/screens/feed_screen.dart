@@ -110,7 +110,7 @@ class FeedScreen extends StatelessWidget {
                     separatorBuilder: (context, index) => Divider(
                       height: 1,
                       thickness: 1,
-                      color: colorScheme.outlineVariant.withValues(alpha: 0.7),
+                      color: colorScheme.onSurface.withValues(alpha: 0.08),
                     ),
                     itemBuilder: (context, index) {
                       final post = posts[index];

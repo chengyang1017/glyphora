@@ -195,9 +195,19 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
                   final username = user?.username.isNotEmpty == true
                       ? user!.username
                       : l10n.get('unknownUser');
+
+                  final locale = Localizations.localeOf(context);
+
+                  final resolvedName = user
+                      ?.displayNameFor(
+                        languageCode: locale.languageCode,
+                        scriptCode: locale.scriptCode ?? '',
+                      )
+                      .trim();
+
                   final displayName =
-                      user?.profileDisplayName.isNotEmpty == true
-                      ? user!.profileDisplayName
+                      resolvedName != null && resolvedName.isNotEmpty
+                      ? resolvedName
                       : username;
                   final email = user?.email ?? '';
                   final avatarUrl = user?.avatarUrl ?? '';

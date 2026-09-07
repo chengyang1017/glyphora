@@ -54,7 +54,7 @@ final class ProfileRepositoryImpl implements ProfileRepository {
     return user;
   }
 
-  @override
+    @override
   Future<UserModel> updateLanguages({
     required String userId,
     required List<Map<String, dynamic>> languages,
@@ -66,7 +66,31 @@ final class ProfileRepositoryImpl implements ProfileRepository {
     final user = await _userRepository.updateCurrentUser({
       'languages': copiedLanguages,
     });
-    await _mirror(userId, {'languages': copiedLanguages});
+
+    await _mirror(userId, {
+      'languages': copiedLanguages,
+    });
+
+    return user;
+  }
+
+  @override
+  Future<UserModel> updateLocalizedNames({
+    required String userId,
+    required List<Map<String, dynamic>> localizedNames,
+  }) async {
+    final copiedLocalizedNames = localizedNames
+        .map((item) => Map<String, dynamic>.from(item))
+        .toList(growable: false);
+
+    final user = await _userRepository.updateCurrentUser({
+      'localizedNames': copiedLocalizedNames,
+    });
+
+    await _mirror(userId, {
+      'localizedNames': copiedLocalizedNames,
+    });
+
     return user;
   }
 

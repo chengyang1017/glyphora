@@ -17,6 +17,8 @@ class ProfileState {
   String get bio => userProfile.bioText;
   List<String> get tags => userProfile.tagsList;
   List<Map<String, dynamic>> get languages => userProfile.languageList;
+  List<Map<String, dynamic>> get localizedNames =>
+    userProfile.localizedNameList;
   DateTime? get birthday => userProfile.birthday;
   bool get showAge => userProfile.showAge;
   String get displayName => userProfile.profileDisplayName;

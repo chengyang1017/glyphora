@@ -56,7 +56,15 @@ class BlockedUsersScreen extends StatelessWidget {
                 future: profileRepository.getProfile(userId),
                 builder: (context, profileSnapshot) {
                   final user = profileSnapshot.data;
-                  final displayName = user?.profileDisplayName.trim();
+                  final locale = Localizations.localeOf(context);
+
+                  final displayName = user
+                      ?.displayNameFor(
+                        languageCode: locale.languageCode,
+                        scriptCode: locale.scriptCode ?? '',
+                      )
+                      .trim();
+
                   final title = displayName == null || displayName.isEmpty
                       ? l10n.get('unknownUser')
                       : displayName;

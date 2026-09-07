@@ -39,24 +39,31 @@ class UserNameDisplay extends StatelessWidget {
         }
 
         final user = snapshot.data;
+
         if (user == null) {
           return const _AnonymousUserDisplay();
         }
 
-        final nickname = user.nickname?.trim() ?? '';
+        final locale = Localizations.localeOf(context);
+
         final username = user.username.trim();
         final avatar = user.avatarUrl.trim();
 
-        final displayName = nickname.isNotEmpty
-            ? nickname
+        final displayName = user
+            .displayNameFor(
+              languageCode: locale.languageCode,
+              scriptCode: locale.scriptCode ?? '',
+            )
+            .trim();
+
+        final resolvedDisplayName = displayName.isNotEmpty
+            ? displayName
             : username.isNotEmpty
             ? '@$username'
             : '匿名用户';
 
-        final avatarLetter = nickname.isNotEmpty
-            ? nickname.characters.first.toUpperCase()
-            : username.isNotEmpty
-            ? username.characters.first.toUpperCase()
+        final avatarLetter = resolvedDisplayName.isNotEmpty
+            ? resolvedDisplayName.characters.first.toUpperCase()
             : '匿';
 
         return GestureDetector(
@@ -94,7 +101,7 @@ class UserNameDisplay extends StatelessWidget {
               const SizedBox(width: 6),
               Flexible(
                 child: Text(
-                  displayName,
+                  resolvedDisplayName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
