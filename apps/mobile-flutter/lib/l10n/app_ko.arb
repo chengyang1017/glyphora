@@ -576,5 +576,13 @@
   "userUnblocked": "차단을 해제했습니다",
   "blockedUsersEmpty": "차단한 사용자가 없습니다.",
   "blockedInteraction": "한쪽이 상대를 차단하여 상호작용할 수 없습니다.",
-  "moreActions": "더보기"
+  "moreActions": "더보기",
+  "translateTags": "태그 번역",
+  "showOriginalTags": "원문 보기",
+  "tagOriginalLanguage": "원본 언어",
+  "tagLanguageNotSpecified": "지정되지 않음",
+  "tagTranslations": "번역",
+  "tagAddTranslation": "번역 추가",
+  "tagNoTranslations": "추가된 번역이 없습니다",
+  "tagTranslationValue": "번역 내용"
 }

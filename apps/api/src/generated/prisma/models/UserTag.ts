@@ -28,21 +28,30 @@ export type UserTagMinAggregateOutputType = {
   id: string | null
   userId: string | null
   value: string | null
+  languageCode: string | null
+  scriptCode: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type UserTagMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   value: string | null
+  languageCode: string | null
+  scriptCode: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type UserTagCountAggregateOutputType = {
   id: number
   userId: number
   value: number
+  languageCode: number
+  scriptCode: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -51,21 +60,30 @@ export type UserTagMinAggregateInputType = {
   id?: true
   userId?: true
   value?: true
+  languageCode?: true
+  scriptCode?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type UserTagMaxAggregateInputType = {
   id?: true
   userId?: true
   value?: true
+  languageCode?: true
+  scriptCode?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type UserTagCountAggregateInputType = {
   id?: true
   userId?: true
   value?: true
+  languageCode?: true
+  scriptCode?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -145,7 +163,10 @@ export type UserTagGroupByOutputType = {
   id: string
   userId: string
   value: string
+  languageCode: string
+  scriptCode: string
   createdAt: Date
+  updatedAt: Date
   _count: UserTagCountAggregateOutputType | null
   _min: UserTagMinAggregateOutputType | null
   _max: UserTagMaxAggregateOutputType | null
@@ -173,16 +194,24 @@ export type UserTagWhereInput = {
   id?: Prisma.UuidFilter<"UserTag"> | string
   userId?: Prisma.UuidFilter<"UserTag"> | string
   value?: Prisma.StringFilter<"UserTag"> | string
+  languageCode?: Prisma.StringFilter<"UserTag"> | string
+  scriptCode?: Prisma.StringFilter<"UserTag"> | string
   createdAt?: Prisma.DateTimeFilter<"UserTag"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"UserTag"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  translations?: Prisma.UserTagTranslationListRelationFilter
 }
 
 export type UserTagOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  languageCode?: Prisma.SortOrder
+  scriptCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  translations?: Prisma.UserTagTranslationOrderByRelationAggregateInput
 }
 
 export type UserTagWhereUniqueInput = Prisma.AtLeast<{
@@ -193,15 +222,22 @@ export type UserTagWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserTagWhereInput | Prisma.UserTagWhereInput[]
   userId?: Prisma.UuidFilter<"UserTag"> | string
   value?: Prisma.StringFilter<"UserTag"> | string
+  languageCode?: Prisma.StringFilter<"UserTag"> | string
+  scriptCode?: Prisma.StringFilter<"UserTag"> | string
   createdAt?: Prisma.DateTimeFilter<"UserTag"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"UserTag"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  translations?: Prisma.UserTagTranslationListRelationFilter
 }, "id" | "userId_value">
 
 export type UserTagOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  languageCode?: Prisma.SortOrder
+  scriptCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserTagCountOrderByAggregateInput
   _max?: Prisma.UserTagMaxOrderByAggregateInput
   _min?: Prisma.UserTagMinOrderByAggregateInput
@@ -214,55 +250,83 @@ export type UserTagScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"UserTag"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"UserTag"> | string
   value?: Prisma.StringWithAggregatesFilter<"UserTag"> | string
+  languageCode?: Prisma.StringWithAggregatesFilter<"UserTag"> | string
+  scriptCode?: Prisma.StringWithAggregatesFilter<"UserTag"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserTag"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserTag"> | Date | string
 }
 
 export type UserTagCreateInput = {
   id?: string
   value: string
+  languageCode?: string
+  scriptCode?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTagsInput
+  translations?: Prisma.UserTagTranslationCreateNestedManyWithoutTagInput
 }
 
 export type UserTagUncheckedCreateInput = {
   id?: string
   userId: string
   value: string
+  languageCode?: string
+  scriptCode?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
+  translations?: Prisma.UserTagTranslationUncheckedCreateNestedManyWithoutTagInput
 }
 
 export type UserTagUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTagsNestedInput
+  translations?: Prisma.UserTagTranslationUpdateManyWithoutTagNestedInput
 }
 
 export type UserTagUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  translations?: Prisma.UserTagTranslationUncheckedUpdateManyWithoutTagNestedInput
 }
 
 export type UserTagCreateManyInput = {
   id?: string
   userId: string
   value: string
+  languageCode?: string
+  scriptCode?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type UserTagUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserTagUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserTagListRelationFilter = {
@@ -284,21 +348,35 @@ export type UserTagCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  languageCode?: Prisma.SortOrder
+  scriptCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserTagMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  languageCode?: Prisma.SortOrder
+  scriptCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserTagMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  languageCode?: Prisma.SortOrder
+  scriptCode?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+}
+
+export type UserTagScalarRelationFilter = {
+  is?: Prisma.UserTagWhereInput
+  isNot?: Prisma.UserTagWhereInput
 }
 
 export type UserTagCreateNestedManyWithoutUserInput = {
@@ -343,16 +421,38 @@ export type UserTagUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.UserTagScalarWhereInput | Prisma.UserTagScalarWhereInput[]
 }
 
+export type UserTagCreateNestedOneWithoutTranslationsInput = {
+  create?: Prisma.XOR<Prisma.UserTagCreateWithoutTranslationsInput, Prisma.UserTagUncheckedCreateWithoutTranslationsInput>
+  connectOrCreate?: Prisma.UserTagCreateOrConnectWithoutTranslationsInput
+  connect?: Prisma.UserTagWhereUniqueInput
+}
+
+export type UserTagUpdateOneRequiredWithoutTranslationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserTagCreateWithoutTranslationsInput, Prisma.UserTagUncheckedCreateWithoutTranslationsInput>
+  connectOrCreate?: Prisma.UserTagCreateOrConnectWithoutTranslationsInput
+  upsert?: Prisma.UserTagUpsertWithoutTranslationsInput
+  connect?: Prisma.UserTagWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserTagUpdateToOneWithWhereWithoutTranslationsInput, Prisma.UserTagUpdateWithoutTranslationsInput>, Prisma.UserTagUncheckedUpdateWithoutTranslationsInput>
+}
+
 export type UserTagCreateWithoutUserInput = {
   id?: string
   value: string
+  languageCode?: string
+  scriptCode?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
+  translations?: Prisma.UserTagTranslationCreateNestedManyWithoutTagInput
 }
 
 export type UserTagUncheckedCreateWithoutUserInput = {
   id?: string
   value: string
+  languageCode?: string
+  scriptCode?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
+  translations?: Prisma.UserTagTranslationUncheckedCreateNestedManyWithoutTagInput
 }
 
 export type UserTagCreateOrConnectWithoutUserInput = {
@@ -388,48 +488,158 @@ export type UserTagScalarWhereInput = {
   id?: Prisma.UuidFilter<"UserTag"> | string
   userId?: Prisma.UuidFilter<"UserTag"> | string
   value?: Prisma.StringFilter<"UserTag"> | string
+  languageCode?: Prisma.StringFilter<"UserTag"> | string
+  scriptCode?: Prisma.StringFilter<"UserTag"> | string
   createdAt?: Prisma.DateTimeFilter<"UserTag"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"UserTag"> | Date | string
+}
+
+export type UserTagCreateWithoutTranslationsInput = {
+  id?: string
+  value: string
+  languageCode?: string
+  scriptCode?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutTagsInput
+}
+
+export type UserTagUncheckedCreateWithoutTranslationsInput = {
+  id?: string
+  userId: string
+  value: string
+  languageCode?: string
+  scriptCode?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserTagCreateOrConnectWithoutTranslationsInput = {
+  where: Prisma.UserTagWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserTagCreateWithoutTranslationsInput, Prisma.UserTagUncheckedCreateWithoutTranslationsInput>
+}
+
+export type UserTagUpsertWithoutTranslationsInput = {
+  update: Prisma.XOR<Prisma.UserTagUpdateWithoutTranslationsInput, Prisma.UserTagUncheckedUpdateWithoutTranslationsInput>
+  create: Prisma.XOR<Prisma.UserTagCreateWithoutTranslationsInput, Prisma.UserTagUncheckedCreateWithoutTranslationsInput>
+  where?: Prisma.UserTagWhereInput
+}
+
+export type UserTagUpdateToOneWithWhereWithoutTranslationsInput = {
+  where?: Prisma.UserTagWhereInput
+  data: Prisma.XOR<Prisma.UserTagUpdateWithoutTranslationsInput, Prisma.UserTagUncheckedUpdateWithoutTranslationsInput>
+}
+
+export type UserTagUpdateWithoutTranslationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutTagsNestedInput
+}
+
+export type UserTagUncheckedUpdateWithoutTranslationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserTagCreateManyUserInput = {
   id?: string
   value: string
+  languageCode?: string
+  scriptCode?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type UserTagUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  translations?: Prisma.UserTagTranslationUpdateManyWithoutTagNestedInput
 }
 
 export type UserTagUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  translations?: Prisma.UserTagTranslationUncheckedUpdateManyWithoutTagNestedInput
 }
 
 export type UserTagUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.StringFieldUpdateOperationsInput | string
+  languageCode?: Prisma.StringFieldUpdateOperationsInput | string
+  scriptCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type UserTagCountOutputType
+ */
+
+export type UserTagCountOutputType = {
+  translations: number
+}
+
+export type UserTagCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  translations?: boolean | UserTagCountOutputTypeCountTranslationsArgs
+}
+
+/**
+ * UserTagCountOutputType without action
+ */
+export type UserTagCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserTagCountOutputType
+   */
+  select?: Prisma.UserTagCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserTagCountOutputType without action
+ */
+export type UserTagCountOutputTypeCountTranslationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserTagTranslationWhereInput
+}
 
 
 export type UserTagSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
   value?: boolean
+  languageCode?: boolean
+  scriptCode?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  translations?: boolean | Prisma.UserTag$translationsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserTagCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userTag"]>
 
 export type UserTagSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
   value?: boolean
+  languageCode?: boolean
+  scriptCode?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userTag"]>
 
@@ -437,7 +647,10 @@ export type UserTagSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   value?: boolean
+  languageCode?: boolean
+  scriptCode?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userTag"]>
 
@@ -445,12 +658,17 @@ export type UserTagSelectScalar = {
   id?: boolean
   userId?: boolean
   value?: boolean
+  languageCode?: boolean
+  scriptCode?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type UserTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "value" | "createdAt", ExtArgs["result"]["userTag"]>
+export type UserTagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "value" | "languageCode" | "scriptCode" | "createdAt" | "updatedAt", ExtArgs["result"]["userTag"]>
 export type UserTagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  translations?: boolean | Prisma.UserTag$translationsArgs<ExtArgs>
+  _count?: boolean | Prisma.UserTagCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserTagIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -463,12 +681,16 @@ export type $UserTagPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "UserTag"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    translations: Prisma.$UserTagTranslationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
     value: string
+    languageCode: string
+    scriptCode: string
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["userTag"]>
   composites: {}
 }
@@ -864,6 +1086,7 @@ readonly fields: UserTagFieldRefs;
 export interface Prisma__UserTagClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  translations<T extends Prisma.UserTag$translationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserTag$translationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTagTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -896,7 +1119,10 @@ export interface UserTagFieldRefs {
   readonly id: Prisma.FieldRef<"UserTag", 'String'>
   readonly userId: Prisma.FieldRef<"UserTag", 'String'>
   readonly value: Prisma.FieldRef<"UserTag", 'String'>
+  readonly languageCode: Prisma.FieldRef<"UserTag", 'String'>
+  readonly scriptCode: Prisma.FieldRef<"UserTag", 'String'>
   readonly createdAt: Prisma.FieldRef<"UserTag", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"UserTag", 'DateTime'>
 }
     
 
@@ -1295,6 +1521,30 @@ export type UserTagDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many UserTags to delete.
    */
   limit?: number
+}
+
+/**
+ * UserTag.translations
+ */
+export type UserTag$translationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserTagTranslation
+   */
+  select?: Prisma.UserTagTranslationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserTagTranslation
+   */
+  omit?: Prisma.UserTagTranslationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserTagTranslationInclude<ExtArgs> | null
+  where?: Prisma.UserTagTranslationWhereInput
+  orderBy?: Prisma.UserTagTranslationOrderByWithRelationInput | Prisma.UserTagTranslationOrderByWithRelationInput[]
+  cursor?: Prisma.UserTagTranslationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserTagTranslationScalarFieldEnum | Prisma.UserTagTranslationScalarFieldEnum[]
 }
 
 /**

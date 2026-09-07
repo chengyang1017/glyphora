@@ -41,9 +41,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tags               UserTag[]
-  languages          UserLanguage[]
-  localizedNames UserLocalizedName[]
+  tags                    UserTag[]
+  languages               UserLanguage[]
+  localizedNames          UserLocalizedName[]
+  tagAiTranslationCaches  UserTagAiTranslationCache[]
   posts              Post[]
   postVersions       PostVersion[]     @relation("PostVersionAuthor")
   postLikes          PostLike[]
@@ -57,16 +58,85 @@ model User {
 }
 
 model UserTag {
-  id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @db.Uuid
-  value     String   @db.VarChar(50)
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+
+  // 用户自己输入的真正原文
+  value String @db.VarChar(50)
+
+  // 原标签的语言和文字系统
+  // 旧数据允许暂时为空
+  languageCode String @default("") @db.VarChar(32)
+  scriptCode   String @default("") @db.VarChar(32)
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // 作者自己提供的正式翻译
+  translations UserTagTranslation[]
+
   @@unique([userId, value])
   @@index([value])
+  @@index([userId])
   @@map("user_tags")
+}
+
+model UserTagTranslation {
+  id    String @id @default(uuid()) @db.Uuid
+  tagId String @db.Uuid
+
+  languageCode String @db.VarChar(32)
+  scriptCode   String @default("") @db.VarChar(32)
+
+  // 标签作者自己写的翻译
+  value String @db.VarChar(50)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tag UserTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([tagId, languageCode, scriptCode])
+  @@index([tagId])
+  @@index([languageCode, scriptCode])
+  @@map("user_tag_translations")
+}
+
+model UserTagAiTranslationCache {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+
+  // 观看者想翻译成什么语言
+  languageCode String @db.VarChar(32)
+  scriptCode   String @default("") @db.VarChar(32)
+
+  // 整组标签一次缓存
+  //
+  // 例如：
+  // [
+  //   {
+  //     "original": "Башҡорт теле",
+  //     "translated": "巴什基尔语"
+  //   },
+  //   {
+  //     "original": "Rust",
+  //     "translated": "Rust"
+  //   }
+  // ]
+  translations Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 同一个用户、同一个目标语言只保留一份
+  @@unique([userId, languageCode, scriptCode])
+  @@index([userId])
+  @@index([languageCode, scriptCode])
+  @@map("user_tag_ai_translation_cache")
 }
 
 model UserLanguage {

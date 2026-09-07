@@ -576,5 +576,13 @@
   "userUnblocked": "เลิกบล็อกผู้ใช้แล้ว",
   "blockedUsersEmpty": "คุณยังไม่ได้บล็อกใคร",
   "blockedInteraction": "ไม่สามารถโต้ตอบได้ เนื่องจากฝ่ายหนึ่งบล็อกอีกฝ่าย",
-  "moreActions": "การดำเนินการเพิ่มเติม"
+  "moreActions": "การดำเนินการเพิ่มเติม",
+  "translateTags": "แปลแท็ก",
+  "showOriginalTags": "แสดงต้นฉบับ",
+  "tagOriginalLanguage": "ภาษาต้นฉบับ",
+  "tagLanguageNotSpecified": "ไม่ได้ระบุ",
+  "tagTranslations": "คำแปล",
+  "tagAddTranslation": "เพิ่มคำแปล",
+  "tagNoTranslations": "ยังไม่มีคำแปล",
+  "tagTranslationValue": "คำแปล"
 }

@@ -53,6 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   UserTag: 'UserTag',
+  UserTagTranslation: 'UserTagTranslation',
+  UserTagAiTranslationCache: 'UserTagAiTranslationCache',
   UserLanguage: 'UserLanguage',
   UserLocalizedName: 'UserLocalizedName',
   Post: 'Post',
@@ -106,10 +108,39 @@ export const UserTagScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   value: 'value',
-  createdAt: 'createdAt'
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserTagScalarFieldEnum = (typeof UserTagScalarFieldEnum)[keyof typeof UserTagScalarFieldEnum]
+
+
+export const UserTagTranslationScalarFieldEnum = {
+  id: 'id',
+  tagId: 'tagId',
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserTagTranslationScalarFieldEnum = (typeof UserTagTranslationScalarFieldEnum)[keyof typeof UserTagTranslationScalarFieldEnum]
+
+
+export const UserTagAiTranslationCacheScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  translations: 'translations',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserTagAiTranslationCacheScalarFieldEnum = (typeof UserTagAiTranslationCacheScalarFieldEnum)[keyof typeof UserTagAiTranslationCacheScalarFieldEnum]
 
 
 export const UserLanguageScalarFieldEnum = {

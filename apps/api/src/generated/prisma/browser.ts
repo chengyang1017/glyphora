@@ -28,6 +28,16 @@ export type User = Prisma.UserModel
  */
 export type UserTag = Prisma.UserTagModel
 /**
+ * Model UserTagTranslation
+ * 
+ */
+export type UserTagTranslation = Prisma.UserTagTranslationModel
+/**
+ * Model UserTagAiTranslationCache
+ * 
+ */
+export type UserTagAiTranslationCache = Prisma.UserTagAiTranslationCacheModel
+/**
  * Model UserLanguage
  * 
  */

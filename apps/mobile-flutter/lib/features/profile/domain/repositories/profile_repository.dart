@@ -1,4 +1,5 @@
 import '../../../auth/domain/models/user_model.dart';
+import '../../../auth/domain/models/user_tag_model.dart';
 
 /// Domain boundary for profile reads and profile mutations.
 ///
@@ -12,7 +13,7 @@ abstract interface class ProfileRepository {
 
   Future<UserModel> updateTags({
     required String userId,
-    required List<String> tags,
+    required List<UserTagModel> tags,
   });
 
   Future<UserModel> updateLanguages({

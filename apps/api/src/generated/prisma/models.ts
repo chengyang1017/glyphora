@@ -10,6 +10,8 @@
  */
 export type * from './models/User.ts'
 export type * from './models/UserTag.ts'
+export type * from './models/UserTagTranslation.ts'
+export type * from './models/UserTagAiTranslationCache.ts'
 export type * from './models/UserLanguage.ts'
 export type * from './models/UserLocalizedName.ts'
 export type * from './models/Post.ts'

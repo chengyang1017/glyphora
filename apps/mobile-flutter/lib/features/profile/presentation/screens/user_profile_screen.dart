@@ -18,6 +18,7 @@ import '../../domain/repositories/profile_repository.dart';
 import '../widgets/profile_language_section.dart';
 import '../widgets/profile_localized_tags.dart';
 import '../widgets/profile_post_sliver_list.dart';
+import '../../../auth/domain/models/user_tag_model.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key, required this.uid});
@@ -325,12 +326,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         )
         .trim();
 
-    final displayName = resolvedName.isNotEmpty
-        ? resolvedName
-        : username;
+    final displayName = resolvedName.isNotEmpty ? resolvedName : username;
     final avatarUrl = user.avatarUrl;
     final bio = user.bioText;
-    final tags = user.tagsList;
+    final tags = user.tagDetailList;
     final languages = user.languageList;
     final isMe = _currentUserId == widget.uid;
 
@@ -593,10 +592,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 
-  Widget _buildBioTagsSection({
-    required String bio,
-    required List<String> tags,
-  }) {
+    Widget _buildBioTagsSection({
+      required String bio,
+      required List<UserTagModel> tags,
+    }) {
     return Container(
       padding: const EdgeInsets.all(20),
       color: Theme.of(context).colorScheme.surface,
@@ -615,8 +614,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           if (bio.isNotEmpty && tags.isNotEmpty) const SizedBox(height: 16),
           if (tags.isNotEmpty)
             ProfileLocalizedTags(
+              profileUserId: widget.uid,
               tags: tags,
-              profileContext: bio,
             ),
         ],
       ),

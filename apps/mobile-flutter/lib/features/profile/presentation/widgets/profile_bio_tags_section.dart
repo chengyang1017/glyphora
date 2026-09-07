@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../app/l10n/app_localizations.dart';
 import 'profile_localized_tags.dart';
+import '../../../auth/domain/models/user_tag_model.dart';
 
 class ProfileBioTagsSection extends StatelessWidget {
   final String bio;
-  final List<String> tags;
+  final String profileUserId;
+  final List<UserTagModel> tags;
   final AppLocalizations l10n;
   final VoidCallback onEditBio;
   final VoidCallback onEditTags;
@@ -13,6 +15,7 @@ class ProfileBioTagsSection extends StatelessWidget {
   const ProfileBioTagsSection({
     super.key,
     required this.bio,
+    required this.profileUserId,
     required this.tags,
     required this.l10n,
     required this.onEditBio,
@@ -59,8 +62,8 @@ class ProfileBioTagsSection extends StatelessWidget {
           if (bio.isNotEmpty && tags.isNotEmpty) const SizedBox(height: 16),
           if (tags.isNotEmpty)
             ProfileLocalizedTags(
+              profileUserId: profileUserId,
               tags: tags,
-              profileContext: bio,
               onTap: onEditTags,
               showAddButton: true,
             ),

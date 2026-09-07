@@ -1,3 +1,5 @@
+import 'user_tag_model.dart';
+
 class UserModel {
   final String id;
   final String username;
@@ -10,6 +12,7 @@ class UserModel {
   final List<String>? friends;
   final List<String>? friendRequests;
   final List<String>? tags;
+  final List<UserTagModel>? tagDetails;
   final List<Map<String, dynamic>>? languages;
   final List<Map<String, dynamic>>? localizedNames;
   final DateTime? birthday;
@@ -29,6 +32,7 @@ class UserModel {
     this.friends,
     this.friendRequests,
     this.tags,
+    this.tagDetails,
     this.languages,
     this.localizedNames,
     this.birthday,
@@ -147,6 +151,19 @@ class UserModel {
   String get nicknameText => nickname ?? '';
   String get bioText => bio ?? '';
   List<String> get tagsList => tags ?? const <String>[];
+  List<UserTagModel> get tagDetailList {
+    final details = tagDetails;
+
+    if (details != null && details.isNotEmpty) {
+      return details;
+    }
+
+    // 舊 Firestore / 舊 API 資料相容
+    return tagsList
+        .map((value) => UserTagModel(value: value))
+        .toList(growable: false);
+  }
+
   List<Map<String, dynamic>> get languageList =>
       languages ?? const <Map<String, dynamic>>[];
   List<Map<String, dynamic>> get localizedNameList =>
@@ -164,6 +181,7 @@ class UserModel {
     List<String>? friends,
     List<String>? friendRequests,
     List<String>? tags,
+    List<UserTagModel>? tagDetails,
     List<Map<String, dynamic>>? languages,
     List<Map<String, dynamic>>? localizedNames,
     DateTime? birthday,
@@ -184,6 +202,7 @@ class UserModel {
       friends: friends ?? this.friends,
       friendRequests: friendRequests ?? this.friendRequests,
       tags: tags ?? this.tags,
+      tagDetails: tagDetails ?? this.tagDetails,
       languages: languages ?? this.languages,
       localizedNames: localizedNames ?? this.localizedNames,
       birthday: clearBirthday ? null : birthday ?? this.birthday,

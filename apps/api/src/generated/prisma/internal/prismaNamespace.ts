@@ -399,6 +399,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   UserTag: 'UserTag',
+  UserTagTranslation: 'UserTagTranslation',
+  UserTagAiTranslationCache: 'UserTagAiTranslationCache',
   UserLanguage: 'UserLanguage',
   UserLocalizedName: 'UserLocalizedName',
   Post: 'Post',
@@ -424,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "userTag" | "userLanguage" | "userLocalizedName" | "post" | "postVersion" | "postImage" | "postLike" | "postBookmark" | "postReport" | "postComment" | "postEditHistory"
+    modelProps: "user" | "userTag" | "userTagTranslation" | "userTagAiTranslationCache" | "userLanguage" | "userLocalizedName" | "post" | "postVersion" | "postImage" | "postLike" | "postBookmark" | "postReport" | "postComment" | "postEditHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -573,6 +575,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserTagCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserTagCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserTagTranslation: {
+      payload: Prisma.$UserTagTranslationPayload<ExtArgs>
+      fields: Prisma.UserTagTranslationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserTagTranslationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserTagTranslationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>
+        }
+        findFirst: {
+          args: Prisma.UserTagTranslationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserTagTranslationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>
+        }
+        findMany: {
+          args: Prisma.UserTagTranslationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>[]
+        }
+        create: {
+          args: Prisma.UserTagTranslationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>
+        }
+        createMany: {
+          args: Prisma.UserTagTranslationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserTagTranslationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>[]
+        }
+        delete: {
+          args: Prisma.UserTagTranslationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>
+        }
+        update: {
+          args: Prisma.UserTagTranslationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserTagTranslationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserTagTranslationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserTagTranslationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserTagTranslationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagTranslationPayload>
+        }
+        aggregate: {
+          args: Prisma.UserTagTranslationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserTagTranslation>
+        }
+        groupBy: {
+          args: Prisma.UserTagTranslationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTagTranslationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserTagTranslationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTagTranslationCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserTagAiTranslationCache: {
+      payload: Prisma.$UserTagAiTranslationCachePayload<ExtArgs>
+      fields: Prisma.UserTagAiTranslationCacheFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserTagAiTranslationCacheFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserTagAiTranslationCacheFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>
+        }
+        findFirst: {
+          args: Prisma.UserTagAiTranslationCacheFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserTagAiTranslationCacheFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>
+        }
+        findMany: {
+          args: Prisma.UserTagAiTranslationCacheFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>[]
+        }
+        create: {
+          args: Prisma.UserTagAiTranslationCacheCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>
+        }
+        createMany: {
+          args: Prisma.UserTagAiTranslationCacheCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserTagAiTranslationCacheCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>[]
+        }
+        delete: {
+          args: Prisma.UserTagAiTranslationCacheDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>
+        }
+        update: {
+          args: Prisma.UserTagAiTranslationCacheUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserTagAiTranslationCacheDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserTagAiTranslationCacheUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserTagAiTranslationCacheUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserTagAiTranslationCacheUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserTagAiTranslationCachePayload>
+        }
+        aggregate: {
+          args: Prisma.UserTagAiTranslationCacheAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserTagAiTranslationCache>
+        }
+        groupBy: {
+          args: Prisma.UserTagAiTranslationCacheGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTagAiTranslationCacheGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserTagAiTranslationCacheCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserTagAiTranslationCacheCountAggregateOutputType> | number
         }
       }
     }
@@ -1380,10 +1530,39 @@ export const UserTagScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   value: 'value',
-  createdAt: 'createdAt'
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserTagScalarFieldEnum = (typeof UserTagScalarFieldEnum)[keyof typeof UserTagScalarFieldEnum]
+
+
+export const UserTagTranslationScalarFieldEnum = {
+  id: 'id',
+  tagId: 'tagId',
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserTagTranslationScalarFieldEnum = (typeof UserTagTranslationScalarFieldEnum)[keyof typeof UserTagTranslationScalarFieldEnum]
+
+
+export const UserTagAiTranslationCacheScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  languageCode: 'languageCode',
+  scriptCode: 'scriptCode',
+  translations: 'translations',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserTagAiTranslationCacheScalarFieldEnum = (typeof UserTagAiTranslationCacheScalarFieldEnum)[keyof typeof UserTagAiTranslationCacheScalarFieldEnum]
 
 
 export const UserLanguageScalarFieldEnum = {
@@ -1622,20 +1801,6 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -1646,6 +1811,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -1815,6 +1994,8 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   userTag?: Prisma.UserTagOmit
+  userTagTranslation?: Prisma.UserTagTranslationOmit
+  userTagAiTranslationCache?: Prisma.UserTagAiTranslationCacheOmit
   userLanguage?: Prisma.UserLanguageOmit
   userLocalizedName?: Prisma.UserLocalizedNameOmit
   post?: Prisma.PostOmit

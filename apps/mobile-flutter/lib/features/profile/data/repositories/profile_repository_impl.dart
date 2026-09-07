@@ -5,6 +5,7 @@ import '../../../auth/data/mappers/user_model_mapper.dart';
 import '../../../auth/domain/models/user_model.dart';
 import '../../../auth/domain/repositories/user_backend_repository.dart';
 import '../../domain/repositories/profile_repository.dart';
+import '../../../auth/domain/models/user_tag_model.dart';
 
 /// Data-layer implementation of [ProfileRepository].
 ///
@@ -46,15 +47,34 @@ final class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<UserModel> updateTags({
     required String userId,
-    required List<String> tags,
+    required List<UserTagModel> tags,
   }) async {
-    final copiedTags = List<String>.from(tags);
-    final user = await _userRepository.updateCurrentUser({'tags': copiedTags});
-    await _mirror(userId, {'tags': copiedTags});
+    final copiedTags = tags
+        .map(
+          (tag) => UserTagModel(
+            id: tag.id,
+            value: tag.value,
+            languageCode: tag.languageCode,
+            scriptCode: tag.scriptCode,
+            translations: List<UserTagTranslationModel>.from(tag.translations),
+          ),
+        )
+        .toList(growable: false);
+
+    final user = await _userRepository.updateCurrentUser({
+      'tags': copiedTags.map((tag) => tag.toApiMap()).toList(growable: false),
+    });
+
+    // Firestore 仍然只作为旧系统兼容镜像。
+    // 不在那里维护新的翻译结构。
+    await _mirror(userId, {
+      'tags': copiedTags.map((tag) => tag.value).toList(growable: false),
+    });
+
     return user;
   }
 
-    @override
+  @override
   Future<UserModel> updateLanguages({
     required String userId,
     required List<Map<String, dynamic>> languages,
@@ -67,9 +87,7 @@ final class ProfileRepositoryImpl implements ProfileRepository {
       'languages': copiedLanguages,
     });
 
-    await _mirror(userId, {
-      'languages': copiedLanguages,
-    });
+    await _mirror(userId, {'languages': copiedLanguages});
 
     return user;
   }
@@ -87,9 +105,7 @@ final class ProfileRepositoryImpl implements ProfileRepository {
       'localizedNames': copiedLocalizedNames,
     });
 
-    await _mirror(userId, {
-      'localizedNames': copiedLocalizedNames,
-    });
+    await _mirror(userId, {'localizedNames': copiedLocalizedNames});
 
     return user;
   }

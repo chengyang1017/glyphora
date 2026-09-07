@@ -576,5 +576,13 @@
   "userUnblocked": "Đã bỏ chặn người dùng",
   "blockedUsersEmpty": "Bạn chưa chặn ai.",
   "blockedInteraction": "Không thể tương tác vì một trong hai người đã chặn người kia.",
-  "moreActions": "Thao tác khác"
+  "moreActions": "Thao tác khác",
+  "translateTags": "Dịch thẻ",
+  "showOriginalTags": "Hiện bản gốc",
+  "tagOriginalLanguage": "Ngôn ngữ gốc",
+  "tagLanguageNotSpecified": "Chưa chỉ định",
+  "tagTranslations": "Bản dịch",
+  "tagAddTranslation": "Thêm bản dịch",
+  "tagNoTranslations": "Chưa thêm bản dịch",
+  "tagTranslationValue": "Nội dung dịch"
 }

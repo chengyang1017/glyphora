@@ -576,5 +576,13 @@
   "userUnblocked": "Sekatan pengguna dibuka",
   "blockedUsersEmpty": "Anda belum menyekat sesiapa.",
   "blockedInteraction": "Interaksi tidak tersedia kerana salah seorang telah menyekat yang lain.",
-  "moreActions": "Tindakan lain"
+  "moreActions": "Tindakan lain",
+  "translateTags": "Terjemah tag",
+  "showOriginalTags": "Tunjukkan asal",
+  "tagOriginalLanguage": "Bahasa asal",
+  "tagLanguageNotSpecified": "Tidak ditentukan",
+  "tagTranslations": "Terjemahan",
+  "tagAddTranslation": "Tambah terjemahan",
+  "tagNoTranslations": "Tiada terjemahan ditambah",
+  "tagTranslationValue": "Terjemahan"
 }

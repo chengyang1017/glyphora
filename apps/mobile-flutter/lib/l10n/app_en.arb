@@ -826,5 +826,13 @@
         "type": "String"
       }
     }
-  }
+  },
+  "translateTags": "Translate tags",
+  "showOriginalTags": "Show original",
+  "tagOriginalLanguage": "Original language",
+  "tagLanguageNotSpecified": "Not specified",
+  "tagTranslations": "Translations",
+  "tagAddTranslation": "Add translation",
+  "tagNoTranslations": "No translations added",
+  "tagTranslationValue": "Translation"
 }

@@ -115,20 +115,33 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   Future<void> _editTags() async {
     final userId = _userId;
-    if (userId == null) return;
+    if (userId == null) {
+      return;
+    }
 
     final result = await showTagEditorSheet(
       context: context,
-      selectedTags: _profileCubit.state.tags,
+      selectedTags: _profileCubit.state.tagDetails,
       presetTags: _presetTags,
     );
 
-    if (result == null) return;
+    if (result == null) {
+      return;
+    }
 
     try {
       await _profileCubit.updateTags(userId, result);
+
+      if (!mounted) {
+        return;
+      }
+
       _showSuccess(context.l10n.tagsUpdated);
     } catch (e) {
+      if (!mounted) {
+        return;
+      }
+
       _showError('${context.l10n.updateFailed}: $e');
     }
   }
@@ -222,35 +235,25 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     // 取消、点击外面、按返回键都会得到 null
     if (!mounted || result == null) return;
 
-    final nicknameChanged =
-        result.nickname != profile.nickname;
+    final nicknameChanged = result.nickname != profile.nickname;
 
-    final localizedNamesChanged =
-        !_localizedNamesEqual(
-          result.localizedNames,
-          profile.localizedNames,
-        );
+    final localizedNamesChanged = !_localizedNamesEqual(
+      result.localizedNames,
+      profile.localizedNames,
+    );
 
     try {
       if (nicknameChanged) {
-        await _profileCubit.updateNickname(
-          userId,
-          result.nickname,
-        );
+        await _profileCubit.updateNickname(userId, result.nickname);
       }
 
       if (localizedNamesChanged) {
-        await _profileCubit.updateLocalizedNames(
-          userId,
-          result.localizedNames,
-        );
+        await _profileCubit.updateLocalizedNames(userId, result.localizedNames);
       }
 
       _showSuccess(context.l10n.nicknameUpdated);
     } catch (e) {
-      _showError(
-        '${context.l10n.updateFailed}: $e',
-      );
+      _showError('${context.l10n.updateFailed}: $e');
     }
   }
 
@@ -264,33 +267,19 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
     String keyOf(Map<String, dynamic> item) {
       final languageCode =
-          item['languageCode']
-              ?.toString()
-              .trim()
-              .toLowerCase() ??
-          '';
+          item['languageCode']?.toString().trim().toLowerCase() ?? '';
 
       final scriptCode =
-          item['scriptCode']
-              ?.toString()
-              .trim()
-              .toLowerCase() ??
-          '';
+          item['scriptCode']?.toString().trim().toLowerCase() ?? '';
 
-      final name =
-          item['name']
-              ?.toString()
-              .trim() ??
-          '';
+      final name = item['name']?.toString().trim() ?? '';
 
       return '$languageCode|$scriptCode|$name';
     }
 
-    final firstKeys =
-        first.map(keyOf).toList()..sort();
+    final firstKeys = first.map(keyOf).toList()..sort();
 
-    final secondKeys =
-        second.map(keyOf).toList()..sort();
+    final secondKeys = second.map(keyOf).toList()..sort();
 
     for (var i = 0; i < firstKeys.length; i++) {
       if (firstKeys[i] != secondKeys[i]) {
@@ -473,8 +462,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: ProfileBioTagsSection(
+                    profileUserId: userId,
                     bio: profile.bio,
-                    tags: profile.tags,
+                    tags: profile.tagDetails,
                     l10n: l10n,
                     onEditBio: _editBio,
                     onEditTags: _editTags,

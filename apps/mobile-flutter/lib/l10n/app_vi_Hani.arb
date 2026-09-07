@@ -576,5 +576,13 @@
   "userUnblocked": "㐌𠬃禁𠊛用",
   "blockedUsersEmpty": "伴𣗓禁埃.",
   "blockedInteraction": "空体互動由𠬠邊㐌禁邊恪.",
-  "moreActions": "操作恪"
+  "moreActions": "操作恪",
+  "translateTags": "翻譯標籤",
+  "showOriginalTags": "顯示原文",
+  "tagOriginalLanguage": "Ngôn ngữ gốc",
+  "tagLanguageNotSpecified": "Chưa chỉ định",
+  "tagTranslations": "Bản dịch",
+  "tagAddTranslation": "Thêm bản dịch",
+  "tagNoTranslations": "Chưa thêm bản dịch",
+  "tagTranslationValue": "Nội dung dịch"
 }

@@ -10,6 +10,7 @@ import '../../application/models/local_profile_image.dart';
 import '../../application/ports/profile_media_repository.dart';
 import '../../domain/repositories/profile_repository.dart';
 import 'profile_state.dart';
+import '../../../auth/domain/models/user_tag_model.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit({
@@ -48,10 +49,16 @@ class ProfileCubit extends Cubit<ProfileState> {
     return posts.fold<int>(0, (total, post) => total + post.likeCount);
   }
 
-  Future<void> updateTags(String uid, List<String> newTags) {
-    final copiedTags = List<String>.from(newTags);
+  Future<void> updateTags(String uid, List<UserTagModel> newTags) {
+    final copiedTags = List<UserTagModel>.from(newTags);
+
     return _commitOptimistic(
-      optimistic: state.userProfile.copyWith(tags: copiedTags),
+      optimistic: state.userProfile.copyWith(
+        tags: copiedTags.map((tag) => tag.value).toList(growable: false),
+
+        tagDetails: copiedTags,
+      ),
+
       persist: () =>
           _profileRepository.updateTags(userId: uid, tags: copiedTags),
     );

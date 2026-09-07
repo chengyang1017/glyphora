@@ -1,4 +1,5 @@
 import '../../../auth/domain/models/user_model.dart';
+import '../../../auth/domain/models/user_tag_model.dart';
 
 class ProfileState {
   const ProfileState({
@@ -16,9 +17,10 @@ class ProfileState {
   String get nickname => userProfile.nicknameText;
   String get bio => userProfile.bioText;
   List<String> get tags => userProfile.tagsList;
+  List<UserTagModel> get tagDetails => userProfile.tagDetailList;
   List<Map<String, dynamic>> get languages => userProfile.languageList;
   List<Map<String, dynamic>> get localizedNames =>
-    userProfile.localizedNameList;
+      userProfile.localizedNameList;
   DateTime? get birthday => userProfile.birthday;
   bool get showAge => userProfile.showAge;
   String get displayName => userProfile.profileDisplayName;

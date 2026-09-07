@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:glyphora_mobile/features/auth/domain/models/user_model.dart';
+import 'package:glyphora_mobile/features/auth/domain/models/user_tag_model.dart';
 import 'package:glyphora_mobile/features/auth/domain/repositories/user_backend_repository.dart';
 import 'package:glyphora_mobile/features/profile/data/repositories/profile_repository_impl.dart';
 
@@ -32,8 +33,13 @@ void main() {
       'updateTags copies payload and returns backend-confirmed user',
       () async {
         const confirmed = UserModel(id: 'user-1', username: 'alice');
+
         userRepository.updateResult = confirmed;
-        final tags = <String>['flutter', 'nom'];
+
+        final tags = <UserTagModel>[
+          const UserTagModel(value: 'flutter'),
+          const UserTagModel(value: 'nom'),
+        ];
 
         final result = await repository.updateTags(
           userId: 'user-1',
@@ -41,11 +47,40 @@ void main() {
         );
 
         expect(result, same(confirmed));
+
         expect(userRepository.lastUpdate, {
-          'tags': ['flutter', 'nom'],
+          'tags': [
+            {
+              'value': 'flutter',
+              'languageCode': '',
+              'scriptCode': '',
+              'translations': [],
+            },
+            {
+              'value': 'nom',
+              'languageCode': '',
+              'scriptCode': '',
+              'translations': [],
+            },
+          ],
         });
-        tags.add('changed-after-call');
-        expect(userRepository.lastUpdate!['tags'], ['flutter', 'nom']);
+
+        tags.add(const UserTagModel(value: 'changed-after-call'));
+
+        expect(userRepository.lastUpdate!['tags'], [
+          {
+            'value': 'flutter',
+            'languageCode': '',
+            'scriptCode': '',
+            'translations': [],
+          },
+          {
+            'value': 'nom',
+            'languageCode': '',
+            'scriptCode': '',
+            'translations': [],
+          },
+        ]);
       },
     );
 

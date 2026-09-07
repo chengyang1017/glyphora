@@ -576,5 +576,13 @@
   "userUnblocked": "已解除拉黑",
   "blockedUsersEmpty": "你还没有拉黑任何用户。",
   "blockedInteraction": "由于其中一方已拉黑另一方，无法互动。",
-  "moreActions": "更多操作"
+  "moreActions": "更多操作",
+  "translateTags": "翻译标签",
+  "showOriginalTags": "显示原文",
+  "tagOriginalLanguage": "原始语言",
+  "tagLanguageNotSpecified": "未指定",
+  "tagTranslations": "翻译",
+  "tagAddTranslation": "添加翻译",
+  "tagNoTranslations": "尚未添加翻译",
+  "tagTranslationValue": "翻译内容"
 }

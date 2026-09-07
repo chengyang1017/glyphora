@@ -576,5 +576,13 @@
   "userUnblocked": "ブロックを解除しました",
   "blockedUsersEmpty": "ブロックしているユーザーはいません。",
   "blockedInteraction": "どちらかが相手をブロックしているため、交流できません。",
-  "moreActions": "その他の操作"
+  "moreActions": "その他の操作",
+  "translateTags": "タグを翻訳",
+  "showOriginalTags": "原文を表示",
+  "tagOriginalLanguage": "元の言語",
+  "tagLanguageNotSpecified": "未指定",
+  "tagTranslations": "翻訳",
+  "tagAddTranslation": "翻訳を追加",
+  "tagNoTranslations": "翻訳はまだありません",
+  "tagTranslationValue": "翻訳内容"
 }

@@ -261,6 +261,7 @@ export type UserWhereInput = {
   tags?: Prisma.UserTagListRelationFilter
   languages?: Prisma.UserLanguageListRelationFilter
   localizedNames?: Prisma.UserLocalizedNameListRelationFilter
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheListRelationFilter
   posts?: Prisma.PostListRelationFilter
   postVersions?: Prisma.PostVersionListRelationFilter
   postLikes?: Prisma.PostLikeListRelationFilter
@@ -290,6 +291,7 @@ export type UserOrderByWithRelationInput = {
   tags?: Prisma.UserTagOrderByRelationAggregateInput
   languages?: Prisma.UserLanguageOrderByRelationAggregateInput
   localizedNames?: Prisma.UserLocalizedNameOrderByRelationAggregateInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheOrderByRelationAggregateInput
   posts?: Prisma.PostOrderByRelationAggregateInput
   postVersions?: Prisma.PostVersionOrderByRelationAggregateInput
   postLikes?: Prisma.PostLikeOrderByRelationAggregateInput
@@ -322,6 +324,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   tags?: Prisma.UserTagListRelationFilter
   languages?: Prisma.UserLanguageListRelationFilter
   localizedNames?: Prisma.UserLocalizedNameListRelationFilter
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheListRelationFilter
   posts?: Prisma.PostListRelationFilter
   postVersions?: Prisma.PostVersionListRelationFilter
   postLikes?: Prisma.PostLikeListRelationFilter
@@ -393,6 +396,7 @@ export type UserCreateInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -422,6 +426,7 @@ export type UserUncheckedCreateInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -451,6 +456,7 @@ export type UserUpdateInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -480,6 +486,7 @@ export type UserUncheckedUpdateInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -661,6 +668,20 @@ export type UserUpdateOneRequiredWithoutTagsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTagsInput, Prisma.UserUpdateWithoutTagsInput>, Prisma.UserUncheckedUpdateWithoutTagsInput>
 }
 
+export type UserCreateNestedOneWithoutTagAiTranslationCachesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTagAiTranslationCachesInput, Prisma.UserUncheckedCreateWithoutTagAiTranslationCachesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTagAiTranslationCachesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTagAiTranslationCachesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTagAiTranslationCachesInput, Prisma.UserUncheckedCreateWithoutTagAiTranslationCachesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTagAiTranslationCachesInput
+  upsert?: Prisma.UserUpsertWithoutTagAiTranslationCachesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTagAiTranslationCachesInput, Prisma.UserUpdateWithoutTagAiTranslationCachesInput>, Prisma.UserUncheckedUpdateWithoutTagAiTranslationCachesInput>
+}
+
 export type UserCreateNestedOneWithoutLanguagesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutLanguagesInput, Prisma.UserUncheckedCreateWithoutLanguagesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutLanguagesInput
@@ -829,6 +850,7 @@ export type UserCreateWithoutTagsInput = {
   updatedAt?: Date | string
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -857,6 +879,7 @@ export type UserUncheckedCreateWithoutTagsInput = {
   updatedAt?: Date | string
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -901,6 +924,7 @@ export type UserUpdateWithoutTagsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -927,6 +951,139 @@ export type UserUncheckedUpdateWithoutTagsInput = {
   interestsMigratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
+  localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
+  postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
+  postBookmarks?: Prisma.PostBookmarkUncheckedUpdateManyWithoutUserNestedInput
+  postReports?: Prisma.PostReportUncheckedUpdateManyWithoutUserNestedInput
+  handledPostReports?: Prisma.PostReportUncheckedUpdateManyWithoutHandledByNestedInput
+  postComments?: Prisma.PostCommentUncheckedUpdateManyWithoutAuthorNestedInput
+  postEditHistory?: Prisma.PostEditHistoryUncheckedUpdateManyWithoutEditedByNestedInput
+}
+
+export type UserCreateWithoutTagAiTranslationCachesInput = {
+  id?: string
+  firebaseUid: string
+  role?: $Enums.UserRole
+  username: string
+  email?: string | null
+  nickname?: string | null
+  avatarUrl?: string | null
+  bio?: string | null
+  birthday?: Date | string | null
+  showAge?: boolean
+  lastActiveAt?: Date | string | null
+  interests?: Prisma.UserCreateinterestsInput | string[]
+  interestsMigratedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
+  languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
+  localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
+  postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
+  postBookmarks?: Prisma.PostBookmarkCreateNestedManyWithoutUserInput
+  postReports?: Prisma.PostReportCreateNestedManyWithoutUserInput
+  handledPostReports?: Prisma.PostReportCreateNestedManyWithoutHandledByInput
+  postComments?: Prisma.PostCommentCreateNestedManyWithoutAuthorInput
+  postEditHistory?: Prisma.PostEditHistoryCreateNestedManyWithoutEditedByInput
+}
+
+export type UserUncheckedCreateWithoutTagAiTranslationCachesInput = {
+  id?: string
+  firebaseUid: string
+  role?: $Enums.UserRole
+  username: string
+  email?: string | null
+  nickname?: string | null
+  avatarUrl?: string | null
+  bio?: string | null
+  birthday?: Date | string | null
+  showAge?: boolean
+  lastActiveAt?: Date | string | null
+  interests?: Prisma.UserCreateinterestsInput | string[]
+  interestsMigratedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
+  languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
+  localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
+  postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
+  postBookmarks?: Prisma.PostBookmarkUncheckedCreateNestedManyWithoutUserInput
+  postReports?: Prisma.PostReportUncheckedCreateNestedManyWithoutUserInput
+  handledPostReports?: Prisma.PostReportUncheckedCreateNestedManyWithoutHandledByInput
+  postComments?: Prisma.PostCommentUncheckedCreateNestedManyWithoutAuthorInput
+  postEditHistory?: Prisma.PostEditHistoryUncheckedCreateNestedManyWithoutEditedByInput
+}
+
+export type UserCreateOrConnectWithoutTagAiTranslationCachesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTagAiTranslationCachesInput, Prisma.UserUncheckedCreateWithoutTagAiTranslationCachesInput>
+}
+
+export type UserUpsertWithoutTagAiTranslationCachesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTagAiTranslationCachesInput, Prisma.UserUncheckedUpdateWithoutTagAiTranslationCachesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTagAiTranslationCachesInput, Prisma.UserUncheckedCreateWithoutTagAiTranslationCachesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTagAiTranslationCachesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTagAiTranslationCachesInput, Prisma.UserUncheckedUpdateWithoutTagAiTranslationCachesInput>
+}
+
+export type UserUpdateWithoutTagAiTranslationCachesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nickname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  showAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interests?: Prisma.UserUpdateinterestsInput | string[]
+  interestsMigratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
+  languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
+  localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
+  postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
+  postBookmarks?: Prisma.PostBookmarkUpdateManyWithoutUserNestedInput
+  postReports?: Prisma.PostReportUpdateManyWithoutUserNestedInput
+  handledPostReports?: Prisma.PostReportUpdateManyWithoutHandledByNestedInput
+  postComments?: Prisma.PostCommentUpdateManyWithoutAuthorNestedInput
+  postEditHistory?: Prisma.PostEditHistoryUpdateManyWithoutEditedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTagAiTranslationCachesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nickname?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthday?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  showAge?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interests?: Prisma.UserUpdateinterestsInput | string[]
+  interestsMigratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
@@ -957,6 +1114,7 @@ export type UserCreateWithoutLanguagesInput = {
   updatedAt?: Date | string
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -985,6 +1143,7 @@ export type UserUncheckedCreateWithoutLanguagesInput = {
   updatedAt?: Date | string
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -1029,6 +1188,7 @@ export type UserUpdateWithoutLanguagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -1057,6 +1217,7 @@ export type UserUncheckedUpdateWithoutLanguagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -1085,6 +1246,7 @@ export type UserCreateWithoutLocalizedNamesInput = {
   updatedAt?: Date | string
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -1113,6 +1275,7 @@ export type UserUncheckedCreateWithoutLocalizedNamesInput = {
   updatedAt?: Date | string
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -1157,6 +1320,7 @@ export type UserUpdateWithoutLocalizedNamesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -1185,6 +1349,7 @@ export type UserUncheckedUpdateWithoutLocalizedNamesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -1214,6 +1379,7 @@ export type UserCreateWithoutPostsInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
   postBookmarks?: Prisma.PostBookmarkCreateNestedManyWithoutUserInput
@@ -1242,6 +1408,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
   postBookmarks?: Prisma.PostBookmarkUncheckedCreateNestedManyWithoutUserInput
@@ -1286,6 +1453,7 @@ export type UserUpdateWithoutPostsInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
   postBookmarks?: Prisma.PostBookmarkUpdateManyWithoutUserNestedInput
@@ -1314,6 +1482,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
   postBookmarks?: Prisma.PostBookmarkUncheckedUpdateManyWithoutUserNestedInput
@@ -1342,6 +1511,7 @@ export type UserCreateWithoutPostVersionsInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
   postBookmarks?: Prisma.PostBookmarkCreateNestedManyWithoutUserInput
@@ -1370,6 +1540,7 @@ export type UserUncheckedCreateWithoutPostVersionsInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
   postBookmarks?: Prisma.PostBookmarkUncheckedCreateNestedManyWithoutUserInput
@@ -1414,6 +1585,7 @@ export type UserUpdateWithoutPostVersionsInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
   postBookmarks?: Prisma.PostBookmarkUpdateManyWithoutUserNestedInput
@@ -1442,6 +1614,7 @@ export type UserUncheckedUpdateWithoutPostVersionsInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
   postBookmarks?: Prisma.PostBookmarkUncheckedUpdateManyWithoutUserNestedInput
@@ -1470,6 +1643,7 @@ export type UserCreateWithoutPostLikesInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postBookmarks?: Prisma.PostBookmarkCreateNestedManyWithoutUserInput
@@ -1498,6 +1672,7 @@ export type UserUncheckedCreateWithoutPostLikesInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postBookmarks?: Prisma.PostBookmarkUncheckedCreateNestedManyWithoutUserInput
@@ -1542,6 +1717,7 @@ export type UserUpdateWithoutPostLikesInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postBookmarks?: Prisma.PostBookmarkUpdateManyWithoutUserNestedInput
@@ -1570,6 +1746,7 @@ export type UserUncheckedUpdateWithoutPostLikesInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postBookmarks?: Prisma.PostBookmarkUncheckedUpdateManyWithoutUserNestedInput
@@ -1598,6 +1775,7 @@ export type UserCreateWithoutPostBookmarksInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -1626,6 +1804,7 @@ export type UserUncheckedCreateWithoutPostBookmarksInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -1670,6 +1849,7 @@ export type UserUpdateWithoutPostBookmarksInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -1698,6 +1878,7 @@ export type UserUncheckedUpdateWithoutPostBookmarksInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -1726,6 +1907,7 @@ export type UserCreateWithoutPostReportsInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -1754,6 +1936,7 @@ export type UserUncheckedCreateWithoutPostReportsInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -1787,6 +1970,7 @@ export type UserCreateWithoutHandledPostReportsInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -1815,6 +1999,7 @@ export type UserUncheckedCreateWithoutHandledPostReportsInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -1859,6 +2044,7 @@ export type UserUpdateWithoutPostReportsInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -1887,6 +2073,7 @@ export type UserUncheckedUpdateWithoutPostReportsInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -1926,6 +2113,7 @@ export type UserUpdateWithoutHandledPostReportsInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -1954,6 +2142,7 @@ export type UserUncheckedUpdateWithoutHandledPostReportsInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -1982,6 +2171,7 @@ export type UserCreateWithoutPostCommentsInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -2010,6 +2200,7 @@ export type UserUncheckedCreateWithoutPostCommentsInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -2054,6 +2245,7 @@ export type UserUpdateWithoutPostCommentsInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -2082,6 +2274,7 @@ export type UserUncheckedUpdateWithoutPostCommentsInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -2110,6 +2303,7 @@ export type UserCreateWithoutPostEditHistoryInput = {
   tags?: Prisma.UserTagCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeCreateNestedManyWithoutUserInput
@@ -2138,6 +2332,7 @@ export type UserUncheckedCreateWithoutPostEditHistoryInput = {
   tags?: Prisma.UserTagUncheckedCreateNestedManyWithoutUserInput
   languages?: Prisma.UserLanguageUncheckedCreateNestedManyWithoutUserInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedCreateNestedManyWithoutUserInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
   postVersions?: Prisma.PostVersionUncheckedCreateNestedManyWithoutAuthorInput
   postLikes?: Prisma.PostLikeUncheckedCreateNestedManyWithoutUserInput
@@ -2182,6 +2377,7 @@ export type UserUpdateWithoutPostEditHistoryInput = {
   tags?: Prisma.UserTagUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUpdateManyWithoutUserNestedInput
@@ -2210,6 +2406,7 @@ export type UserUncheckedUpdateWithoutPostEditHistoryInput = {
   tags?: Prisma.UserTagUncheckedUpdateManyWithoutUserNestedInput
   languages?: Prisma.UserLanguageUncheckedUpdateManyWithoutUserNestedInput
   localizedNames?: Prisma.UserLocalizedNameUncheckedUpdateManyWithoutUserNestedInput
+  tagAiTranslationCaches?: Prisma.UserTagAiTranslationCacheUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
   postVersions?: Prisma.PostVersionUncheckedUpdateManyWithoutAuthorNestedInput
   postLikes?: Prisma.PostLikeUncheckedUpdateManyWithoutUserNestedInput
@@ -2228,6 +2425,7 @@ export type UserCountOutputType = {
   tags: number
   languages: number
   localizedNames: number
+  tagAiTranslationCaches: number
   posts: number
   postVersions: number
   postLikes: number
@@ -2242,6 +2440,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   tags?: boolean | UserCountOutputTypeCountTagsArgs
   languages?: boolean | UserCountOutputTypeCountLanguagesArgs
   localizedNames?: boolean | UserCountOutputTypeCountLocalizedNamesArgs
+  tagAiTranslationCaches?: boolean | UserCountOutputTypeCountTagAiTranslationCachesArgs
   posts?: boolean | UserCountOutputTypeCountPostsArgs
   postVersions?: boolean | UserCountOutputTypeCountPostVersionsArgs
   postLikes?: boolean | UserCountOutputTypeCountPostLikesArgs
@@ -2281,6 +2480,13 @@ export type UserCountOutputTypeCountLanguagesArgs<ExtArgs extends runtime.Types.
  */
 export type UserCountOutputTypeCountLocalizedNamesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserLocalizedNameWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTagAiTranslationCachesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserTagAiTranslationCacheWhereInput
 }
 
 /**
@@ -2359,6 +2565,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
   languages?: boolean | Prisma.User$languagesArgs<ExtArgs>
   localizedNames?: boolean | Prisma.User$localizedNamesArgs<ExtArgs>
+  tagAiTranslationCaches?: boolean | Prisma.User$tagAiTranslationCachesArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   postVersions?: boolean | Prisma.User$postVersionsArgs<ExtArgs>
   postLikes?: boolean | Prisma.User$postLikesArgs<ExtArgs>
@@ -2429,6 +2636,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
   languages?: boolean | Prisma.User$languagesArgs<ExtArgs>
   localizedNames?: boolean | Prisma.User$localizedNamesArgs<ExtArgs>
+  tagAiTranslationCaches?: boolean | Prisma.User$tagAiTranslationCachesArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   postVersions?: boolean | Prisma.User$postVersionsArgs<ExtArgs>
   postLikes?: boolean | Prisma.User$postLikesArgs<ExtArgs>
@@ -2448,6 +2656,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     tags: Prisma.$UserTagPayload<ExtArgs>[]
     languages: Prisma.$UserLanguagePayload<ExtArgs>[]
     localizedNames: Prisma.$UserLocalizedNamePayload<ExtArgs>[]
+    tagAiTranslationCaches: Prisma.$UserTagAiTranslationCachePayload<ExtArgs>[]
     posts: Prisma.$PostPayload<ExtArgs>[]
     postVersions: Prisma.$PostVersionPayload<ExtArgs>[]
     postLikes: Prisma.$PostLikePayload<ExtArgs>[]
@@ -2870,6 +3079,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   tags<T extends Prisma.User$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   languages<T extends Prisma.User$languagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$languagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   localizedNames<T extends Prisma.User$localizedNamesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$localizedNamesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLocalizedNamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tagAiTranslationCaches<T extends Prisma.User$tagAiTranslationCachesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tagAiTranslationCachesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTagAiTranslationCachePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   posts<T extends Prisma.User$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   postVersions<T extends Prisma.User$postVersionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postVersionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   postLikes<T extends Prisma.User$postLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3384,6 +3594,30 @@ export type User$localizedNamesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.UserLocalizedNameScalarFieldEnum | Prisma.UserLocalizedNameScalarFieldEnum[]
+}
+
+/**
+ * User.tagAiTranslationCaches
+ */
+export type User$tagAiTranslationCachesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserTagAiTranslationCache
+   */
+  select?: Prisma.UserTagAiTranslationCacheSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserTagAiTranslationCache
+   */
+  omit?: Prisma.UserTagAiTranslationCacheOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserTagAiTranslationCacheInclude<ExtArgs> | null
+  where?: Prisma.UserTagAiTranslationCacheWhereInput
+  orderBy?: Prisma.UserTagAiTranslationCacheOrderByWithRelationInput | Prisma.UserTagAiTranslationCacheOrderByWithRelationInput[]
+  cursor?: Prisma.UserTagAiTranslationCacheWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserTagAiTranslationCacheScalarFieldEnum | Prisma.UserTagAiTranslationCacheScalarFieldEnum[]
 }
 
 /**

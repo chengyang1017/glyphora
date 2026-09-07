@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/models/user_model.dart';
+import '../../domain/models/user_tag_model.dart';
 
 final class UserModelMapper {
   const UserModelMapper._();
@@ -19,6 +20,7 @@ final class UserModelMapper {
       friends: _stringList(data['friends']),
       friendRequests: _stringList(data['friendRequests']),
       tags: _stringList(data['tags']),
+      tagDetails: _tagDetails(data['tagDetails']),
       languages: _languages(data['languages']),
       localizedNames: _localizedNames(data['localizedNames']),
       birthday: _dateTime(data['birthday']),
@@ -77,6 +79,20 @@ final class UserModelMapper {
           return <String, dynamic>{};
         })
         .where((item) => item.isNotEmpty)
+        .toList(growable: false);
+
+    return result;
+  }
+
+  static List<UserTagModel>? _tagDetails(Object? value) {
+    if (value is! List) {
+      return null;
+    }
+
+    final result = value
+        .whereType<Map>()
+        .map((item) => UserTagModel.fromMap(Map<String, dynamic>.from(item)))
+        .where((tag) => tag.value.isNotEmpty)
         .toList(growable: false);
 
     return result;

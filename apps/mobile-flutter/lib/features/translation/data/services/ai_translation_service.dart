@@ -23,9 +23,6 @@ class AiTranslationService {
 
   final ApiClient _apiClient;
 
-  static final Map<String, List<ProfileTagTranslationResult>>
-      _profileTagCache = {};
-
   Future<AiTranslationResult> translatePost({
     required String title,
     required String content,
@@ -51,63 +48,40 @@ class AiTranslationService {
   }
 
   Future<List<ProfileTagTranslationResult>> translateProfileTags({
-    required List<String> tags,
+    required String profileUserId,
     required String targetLanguageCode,
     required String targetLanguageName,
-    String profileContext = '',
   }) async {
-    if (tags.isEmpty) {
+    if (profileUserId.trim().isEmpty) {
       return const <ProfileTagTranslationResult>[];
-    }
-
-    final cacheKey = [
-      targetLanguageCode,
-      targetLanguageName,
-      profileContext,
-      ...tags,
-    ].join('\u001F');
-
-    final cached = _profileTagCache[cacheKey];
-    if (cached != null) {
-      return cached;
     }
 
     final data = await _apiClient.post(
       '/translations/profile-tags',
       data: {
-        'tags': tags,
+        'profileUserId': profileUserId.trim(),
+
         'targetLanguageCode': targetLanguageCode,
+
         'targetLanguageName': targetLanguageName,
-        'profileContext': profileContext,
       },
     );
 
     final rawTranslations = data['translations'];
 
     if (rawTranslations is! List) {
-      return tags
-          .map(
-            (tag) => ProfileTagTranslationResult(
-              original: tag,
-              translated: tag,
-            ),
-          )
-          .toList(growable: false);
+      return const <ProfileTagTranslationResult>[];
     }
 
-    final results = rawTranslations
+    return rawTranslations
         .whereType<Map>()
         .map(
           (item) => ProfileTagTranslationResult(
-            original: item['original']?.toString() ?? '',
-            translated: item['translated']?.toString() ?? '',
+            original: item['original']?.toString().trim() ?? '',
+            translated: item['translated']?.toString().trim() ?? '',
           ),
         )
         .where((item) => item.original.isNotEmpty)
         .toList(growable: false);
-
-    _profileTagCache[cacheKey] = results;
-
-    return results;
   }
 }

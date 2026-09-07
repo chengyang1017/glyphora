@@ -28,7 +28,16 @@ type UserWithProfileRelations = {
   createdAt: Date;
 
   tags: Array<{
+    id: string;
     value: string;
+    languageCode: string;
+    scriptCode: string;
+
+    translations: Array<{
+      languageCode: string;
+      scriptCode: string;
+      value: string;
+    }>;
   }>;
 
   languages: Array<{
@@ -88,6 +97,34 @@ function serializeUser(
 
     tags: user.tags.map(
       (tag) => tag.value,
+    ),
+
+    tagDetails: user.tags.map(
+      (tag) => ({
+        id: tag.id,
+
+        value: tag.value,
+
+        languageCode:
+          tag.languageCode,
+
+        scriptCode:
+          tag.scriptCode,
+
+        translations:
+          tag.translations.map(
+            (translation) => ({
+              languageCode:
+                translation.languageCode,
+
+              scriptCode:
+                translation.scriptCode,
+
+              value:
+                translation.value,
+            }),
+          ),
+      }),
     ),
 
     languages: user.languages.map(
@@ -300,7 +337,11 @@ userRouter.put(
         },
 
         include: {
-          tags: true,
+          tags: {
+            include: {
+              translations: true,
+            },
+          },
           languages: true,
           localizedNames: true,
         },
@@ -359,7 +400,11 @@ userRouter.get(
           },
 
           include: {
-            tags: true,
+            tags: {
+              include: {
+                translations: true,
+              },
+            },
             languages: true,
             localizedNames: true,
           },
@@ -392,6 +437,81 @@ userRouter.get(
     }
   },
 );
+
+const userTagTranslationSchema =
+  z.object({
+    languageCode: z
+      .string()
+      .trim()
+      .min(1)
+      .max(32),
+
+    scriptCode: z
+      .string()
+      .trim()
+      .max(32)
+      .optional()
+      .default(''),
+
+    value: z
+      .string()
+      .trim()
+      .min(1)
+      .max(50),
+  });
+
+const structuredUserTagSchema =
+  z.object({
+    value: z
+      .string()
+      .trim()
+      .min(1)
+      .max(50),
+
+    languageCode: z
+      .string()
+      .trim()
+      .max(32)
+      .optional()
+      .default(''),
+
+    scriptCode: z
+      .string()
+      .trim()
+      .max(32)
+      .optional()
+      .default(''),
+
+    translations: z
+      .array(
+        userTagTranslationSchema,
+      )
+      .optional()
+      .default([]),
+  });
+
+const userTagInputSchema =
+  z.union([
+    // 舊 Flutter：
+    // ["Flutter", "Python"]
+    z
+      .string()
+      .trim()
+      .min(1)
+      .max(50)
+      .transform(
+        (value) => ({
+          value,
+          languageCode: '',
+          scriptCode: '',
+          translations: [],
+        }),
+      ),
+
+    // 新 Flutter：
+    // [{ value, languageCode, ... }]
+    structuredUserTagSchema,
+  ]);
 
 // ============================================================
 // PATCH /api/v1/users/me
@@ -441,14 +561,9 @@ const updateUserSchema = z.object({
     .optional(),
 
   tags: z
-    .array(
-      z
-        .string()
-        .trim()
-        .min(1)
-        .max(50),
-    )
-    .optional(),
+  .array(userTagInputSchema)
+  .max(10)
+  .optional(),
 
   languages: z
   .array(
@@ -577,27 +692,53 @@ userRouter.patch(
             // --------------------------------------------
 
             if (tags !== undefined) {
-              await transaction.userTag.deleteMany({
-                where: {
+            // 刪除原 tags。
+            // UserTagTranslation 因為 onDelete: Cascade
+            // 也會一起刪除。
+            await transaction.userTag.deleteMany({
+              where: {
+                userId:
+                  currentUser.id,
+              },
+            });
+
+            for (const tag of tags) {
+              await transaction.userTag.create({
+                data: {
                   userId:
                     currentUser.id,
+
+                  value:
+                    tag.value,
+
+                  languageCode:
+                    tag.languageCode,
+
+                  scriptCode:
+                    tag.scriptCode,
+
+                  translations:
+                    tag.translations.length > 0
+                      ? {
+                          create:
+                            tag.translations.map(
+                              (translation) => ({
+                                languageCode:
+                                  translation.languageCode,
+
+                                scriptCode:
+                                  translation.scriptCode,
+
+                                value:
+                                  translation.value,
+                              }),
+                            ),
+                        }
+                      : undefined,
                 },
               });
-
-              if (tags.length > 0) {
-                await transaction.userTag.createMany({
-                  data: tags.map(
-                    (value) => ({
-                      userId:
-                        currentUser.id,
-                      value,
-                    }),
-                  ),
-
-                  skipDuplicates: true,
-                });
-              }
             }
+          }
 
             // --------------------------------------------
             // 3. 如果请求带 languages
@@ -669,6 +810,20 @@ if (localizedNames !== undefined) {
   }
 }
 
+
+// --------------------------------------------
+// 用户资料发生修改后，清除该用户的
+// AI 标签翻译缓存。
+//
+// 下次观看者主动翻译时重新生成，
+// 之后继续复用缓存。
+// --------------------------------------------
+
+await transaction.userTagAiTranslationCache.deleteMany({
+  where: {
+    userId: currentUser.id,
+  },
+});
             // --------------------------------------------
             // 5. 更新完成后重新读取完整 User
             // --------------------------------------------
@@ -680,7 +835,11 @@ if (localizedNames !== undefined) {
               },
 
               include: {
-                tags: true,
+                tags: {
+                  include: {
+                    translations: true,
+                  },
+                },
                 languages: true,
                 localizedNames: true,
               },
@@ -763,7 +922,11 @@ userRouter.get(
           },
 
           include: {
-            tags: true,
+            tags: {
+              include: {
+                translations: true,
+              },
+            },
             languages: true,
             localizedNames: true,
           },
