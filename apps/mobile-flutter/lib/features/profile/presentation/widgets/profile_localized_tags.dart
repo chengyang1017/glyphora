@@ -194,6 +194,14 @@ class _ProfileLocalizedTagsState extends State<ProfileLocalizedTags> {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final tagBackgroundColor =
+        isDark ? colors.outlineVariant : colors.primaryContainer;
+
+    final tagForegroundColor =
+        isDark ? colors.onSurface : colors.onPrimaryContainer;
+
     final locale = Localizations.localeOf(context);
 
     final l10n = AppLocalizations.of(context)!;
@@ -237,7 +245,7 @@ class _ProfileLocalizedTagsState extends State<ProfileLocalizedTags> {
       final chip = Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-          color: colors.outlineVariant,
+          color: tagBackgroundColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -247,7 +255,7 @@ class _ProfileLocalizedTagsState extends State<ProfileLocalizedTags> {
               Icon(
                 Icons.translate_rounded,
                 size: 12,
-                color: colors.onSurfaceVariant,
+                color: tagForegroundColor,
               ),
               const SizedBox(width: 4),
             ],
@@ -255,7 +263,7 @@ class _ProfileLocalizedTagsState extends State<ProfileLocalizedTags> {
               '# $display',
               style: TextStyle(
                 fontSize: 12,
-                color: colors.onSurface,
+                color: tagForegroundColor,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -275,10 +283,10 @@ class _ProfileLocalizedTagsState extends State<ProfileLocalizedTags> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           decoration: BoxDecoration(
-            color: colors.outlineVariant,
+            color: tagBackgroundColor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Icon(Icons.add, size: 14, color: colors.onSurface),
+          child: Icon(Icons.add, size: 14, color: tagForegroundColor),
         ),
       );
     }

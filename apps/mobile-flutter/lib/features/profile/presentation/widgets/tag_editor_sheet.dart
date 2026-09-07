@@ -472,7 +472,9 @@ class _TagDetailEditorState extends State<_TagDetailEditor> {
       },
     );
 
-    controller.dispose();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.dispose();
+    });
 
     if (value == null || value.trim().isEmpty) {
       return null;
