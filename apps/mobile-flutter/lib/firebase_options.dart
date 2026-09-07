@@ -46,15 +46,17 @@ class DefaultFirebaseOptions {
     messagingSenderId: '448948961427',
     projectId: 'forum-3b899',
     authDomain: 'forum-3b899.firebaseapp.com',
+    databaseURL: 'https://forum-3b899-default-rtdb.firebaseio.com',
     storageBucket: 'forum-3b899.firebasestorage.app',
     measurementId: 'G-F5J5W3GFCL',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDgLSUjROM9FIATCIgJLffUZa78Vos_z38',
-    appId: '1:448948961427:android:f4c40027f9b9dea04fcd66',
+    appId: '1:448948961427:android:185a828f10dc39ca4fcd66',
     messagingSenderId: '448948961427',
     projectId: 'forum-3b899',
+    databaseURL: 'https://forum-3b899-default-rtdb.firebaseio.com',
     storageBucket: 'forum-3b899.firebasestorage.app',
   );
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,6 +64,7 @@ class DefaultFirebaseOptions {
     appId: '1:448948961427:ios:cc12aad835d49d2c4fcd66',
     messagingSenderId: '448948961427',
     projectId: 'forum-3b899',
+    databaseURL: 'https://forum-3b899-default-rtdb.firebaseio.com',
     storageBucket: 'forum-3b899.firebasestorage.app',
     iosBundleId: 'com.example.flutterApplication3',
   );
@@ -70,17 +73,19 @@ class DefaultFirebaseOptions {
     appId: '1:448948961427:ios:cc12aad835d49d2c4fcd66',
     messagingSenderId: '448948961427',
     projectId: 'forum-3b899',
+    databaseURL: 'https://forum-3b899-default-rtdb.firebaseio.com',
     storageBucket: 'forum-3b899.firebasestorage.app',
     iosBundleId: 'com.example.flutterApplication3',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyB7X_ijW6RXorSAaNt9M6ASBDLyEQIxAag',
-    appId: '1:448948961427:web:ea7c3443e3272fd24fcd66',
+    appId: '1:448948961427:web:2e04975cdeab6e614fcd66',
     messagingSenderId: '448948961427',
     projectId: 'forum-3b899',
     authDomain: 'forum-3b899.firebaseapp.com',
+    databaseURL: 'https://forum-3b899-default-rtdb.firebaseio.com',
     storageBucket: 'forum-3b899.firebasestorage.app',
-    measurementId: 'G-Z3P84JTLJ8',
+    measurementId: 'G-C876G97HFE',
   );
 }
