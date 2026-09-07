@@ -16,10 +16,12 @@ class ProfilePostSliverList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     if (snapshot.connectionState == ConnectionState.waiting) {
       return SliverToBoxAdapter(
         child: Container(
-          color: Colors.white,
+          color: colors.surface,
           padding: const EdgeInsets.all(32),
           child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
         ),
@@ -29,12 +31,12 @@ class ProfilePostSliverList extends StatelessWidget {
     if (snapshot.hasError) {
       return SliverToBoxAdapter(
         child: Container(
-          color: Colors.white,
+          color: colors.surface,
           padding: const EdgeInsets.all(32),
           child: Center(
             child: Text(
               '${l10n.error}：${snapshot.error}',
-              style: const TextStyle(color: Colors.red),
+              style: TextStyle(color: colors.error),
             ),
           ),
         ),
@@ -46,7 +48,7 @@ class ProfilePostSliverList extends StatelessWidget {
     if (posts.isEmpty) {
       return SliverToBoxAdapter(
         child: Container(
-          color: Colors.white,
+          color: colors.surface,
           padding: const EdgeInsets.symmetric(vertical: 64),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -54,12 +56,15 @@ class ProfilePostSliverList extends StatelessWidget {
               Icon(
                 Icons.article_outlined,
                 size: 44,
-                color: Colors.grey.shade300,
+                color: colors.onSurfaceVariant.withValues(alpha: 0.45),
               ),
               const SizedBox(height: 12),
               Text(
                 l10n.noDynamic,
-                style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+                style: TextStyle(
+                  color: colors.onSurfaceVariant.withValues(alpha: 0.7),
+                  fontSize: 13,
+                ),
               ),
             ],
           ),
@@ -72,7 +77,7 @@ class ProfilePostSliverList extends StatelessWidget {
         final post = posts[index];
 
         return Container(
-          color: Colors.white,
+          color: colors.surface,
           child: Column(
             children: [
               PostItemCard(
@@ -81,7 +86,11 @@ class ProfilePostSliverList extends StatelessWidget {
                 showLanguageBadge: true,
               ),
               if (index < posts.length - 1)
-                Divider(height: 1, thickness: 1, color: Colors.grey.shade100),
+                Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: colors.outlineVariant,
+                ),
             ],
           ),
         );
