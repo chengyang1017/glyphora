@@ -16,6 +16,7 @@ import '../../../social/presentation/widgets/follow_button.dart';
 import '../../../social/presentation/widgets/follow_stats.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../widgets/profile_language_section.dart';
+import '../widgets/profile_localized_tags.dart';
 import '../widgets/profile_post_sliver_list.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -481,8 +482,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           _buildAvatar(avatarUrl, displayName, theme),
           const SizedBox(height: 16),
           Text(
-              displayName,
-              style: TextStyle(
+            displayName,
+            style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.onSurface,
@@ -493,7 +494,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             '@$username',
             style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
           ),
-          
           if (showPublicAge) ...[
             const SizedBox(height: 6),
             Row(
@@ -607,24 +607,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             Text(
               bio,
               style: TextStyle(
-                color: Colors.grey.shade700,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontSize: 14,
                 height: 1.5,
               ),
             ),
           if (bio.isNotEmpty && tags.isNotEmpty) const SizedBox(height: 16),
           if (tags.isNotEmpty)
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: tags
-                  .map(
-                    (tag) => Chip(
-                      label: Text('# $tag'),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  )
-                  .toList(),
+            ProfileLocalizedTags(
+              tags: tags,
+              profileContext: bio,
             ),
         ],
       ),
