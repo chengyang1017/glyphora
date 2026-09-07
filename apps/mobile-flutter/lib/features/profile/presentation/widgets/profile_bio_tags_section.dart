@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../app/l10n/app_localizations.dart';
+import 'profile_localized_tags.dart';
 
 class ProfileBioTagsSection extends StatelessWidget {
   final String bio;
@@ -57,50 +58,11 @@ class ProfileBioTagsSection extends StatelessWidget {
           ],
           if (bio.isNotEmpty && tags.isNotEmpty) const SizedBox(height: 16),
           if (tags.isNotEmpty)
-            GestureDetector(
+            ProfileLocalizedTags(
+              tags: tags,
+              profileContext: bio,
               onTap: onEditTags,
-              child: Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: [
-                  ...tags.map(
-                    (tag) => Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.outlineVariant,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        '# $tag',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  //添加标签按钮
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.outlineVariant,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      size: 14,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                ],
-              ),
+              showAddButton: true,
             ),
           if (bio.isEmpty && tags.isEmpty) ...[
             GestureDetector(
