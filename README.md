@@ -1,255 +1,158 @@
 # 万文社 / Glyphora
 
-> A multilingual social community built with Flutter, Node.js, PostgreSQL, and Firebase services.
+**Vạn Văn Xã · Glyphora**
 
-**万文社（Glyphora）** 是一个以语言、文化和交流为核心的多语言社区应用。
+A multilingual community platform built around **people, languages, writing systems, conversation, and shared knowledge**.
 
-项目使用 **Flutter** 构建跨平台客户端，以 **Node.js / Express、Prisma 和 PostgreSQL** 承载服务器端业务，并继续使用 **Firebase Authentication、Cloud Firestore、Realtime Database 和 Cloud Storage** 等 Firebase 服务。
+Glyphora is not designed as a simple forum clone. It combines community posts, discovery, social relationships, real-time chat, shared notes, multilingual UI, and support for underrepresented writing systems such as **Vietnamese Chữ Nôm**.
 
-它并不只是一个简单的帖子列表，而是在逐步建立完整的社区系统，包括：
-
-* 帖子发布与浏览
-* 分类内容
-* 点赞与评论
-* 用户资料
-* 好友与私信
-* 实时聊天
-* 聊天共享笔记
-* 富文本编辑
-* 多语言界面
-* 发现页
-* 管理后台
+The project is developed as a monorepo with a Flutter mobile client, React administration dashboard, Node.js API, PostgreSQL, and Firebase services.
 
 ---
 
-## Features
+## Screenshots
 
-### 📝 Posts
+> Screenshot placeholders are intentionally kept here. Add the images under `docs/screenshots/` and replace each placeholder when ready.
 
-* 发布文字帖子
-* 图片帖子
-* 多图片上传
-* 帖子详情
-* 点赞
-* 评论
-* 删除帖子
-* 内容分类
-* 推荐 / Feed
-* 公开内容浏览
+### Community Feed
 
----
+📸 **Screenshot placeholder:** `docs/screenshots/feed.png`
 
-### 🔍 Discover
+### Post / Content Detail
 
-独立的 Discover 模块用于探索社区中的内容和用户。
+📸 **Screenshot placeholder:** `docs/screenshots/post-detail.png`
 
-```text
-features/discover/
-```
+### Real-time Chat
 
-Discover 与 Feed 分开管理，使首页内容流与主动探索功能保持独立。
+📸 **Screenshot placeholder:** `docs/screenshots/chat.png`
 
----
+### Multilingual UI
 
-### 💬 Real-time Chat
+📸 **Screenshot placeholder:** `docs/screenshots/multilingual-ui.png`
 
-项目包含完整的聊天功能模块：
+### Vietnamese Chữ Nôm
 
-```text
-features/chat/
-├── domain/
-├── data/
-├── presentation/
-│   ├── cubit/
-│   ├── screens/
-│   └── widgets/
-└── services/
-```
+📸 **Screenshot placeholder:** `docs/screenshots/chu-nom.png`
 
-主要页面包括：
+### Profile / Discover
 
-```text
-chat_list_screen.dart
-chat_screen.dart
-```
+📸 **Screenshot placeholder:** `docs/screenshots/profile-discover.png`
 
-聊天系统支持：
+### Admin Dashboard
 
-* 聊天室列表
-* 私信
-* 实时消息
-* 聊天预览
-* 消息图片
-* 消息状态
-* 用户隐藏消息
-* 双方删除
-* 延迟物理清理
+📸 **Screenshot placeholder:** `docs/screenshots/admin-dashboard.png`
 
 ---
 
-## Message Lifecycle
+## What Glyphora Includes
 
-聊天消息不会在所有情况下立即从数据库物理删除。
+### Community
 
-项目使用类似以下生命周期：
+- Create and browse posts
+- Text and image posts
+- Multiple image uploads
+- Post detail views
+- Likes and comments
+- Content categories
+- Public feeds
+- Discovery experience
+
+### Social
+
+- User profiles
+- Friend relationships
+- Social connections between users
+- Profile-linked posts and activity
+
+### Real-time Chat
+
+- Conversation list
+- Private messaging
+- Real-time messages
+- Image messages
+- Message previews
+- Message visibility state
+- Logical deletion and delayed physical cleanup
+
+The chat lifecycle is designed so that deleting a message does not always immediately destroy its underlying data.
 
 ```text
 Active Message
-      │
-      ▼
-User deletes / hides
-      │
-      ▼
+      ↓
+User hides / deletes
+      ↓
 Logical deletion
-      │
-      ▼
+      ↓
 cleanupAt
-      │
-      ▼
-Node cleanup job
-      │
-      ▼
+      ↓
+Scheduled Node.js cleanup job
+      ↓
 Physical deletion
 ```
 
-Node.js 独立清理任务会定期扫描需要清理的聊天消息。
+The cleanup job can also remove associated media and maintain the latest valid conversation preview.
 
-如果消息包含 Storage 图片，也会同时处理对应媒体文件。
+### Shared Notes
 
-删除最后一条聊天消息时，后台会重新寻找上一条有效消息，并刷新聊天室预览。
+Chat participants can create longer-form shared notes for information that should outlive an individual message.
 
----
+Use cases include:
 
-## 🗒️ Shared Notes
+- Conversation summaries
+- Learning material
+- Shared ideas
+- Draft content
+- Collaborative notes
 
-```text
-features/notes/
-├── models/
-├── screens/
-└── services/
-```
+Rich-text editing is powered by **Flutter Quill**.
 
-万文社不仅提供即时聊天，也在尝试把聊天扩展成长期协作空间。
+### Administration
 
-聊天成员可以建立共享笔记，用于整理：
+The project includes a separate administration application for managing platform data and moderation-oriented workflows.
 
-* 对话内容
-* 学习资料
-* 想法
-* 共同记录
-* 帖子草稿
-
-富文本编辑基于：
-
-```text
-flutter_quill
-flutter_quill_extensions
-```
-
-因此笔记可以拥有比普通聊天消息更完整的内容结构。
+Current administration areas include users, posts, platform statistics, and protected administrative operations.
 
 ---
 
-## 👥 Social
+## Multilingual by Design
 
-```text
-features/social/
-```
+Multilingual support is part of the application architecture rather than a late UI translation layer.
 
-Social 模块负责社区中的用户关系。
+The localization system supports multiple interface languages, including:
 
-包括好友相关状态与用户之间的社交连接。
+- 中文
+- English
+- 日本語
+- 한국어
+- Bahasa Melayu
+- Tiếng Việt
+- ไทย
 
-整体关系可以理解为：
-
-```text
-User
- │
- ├── Profile
- │
- ├── Friends
- │
- ├── Posts
- │
- ├── Chats
- │
- └── Notes
-```
-
----
-
-## 👤 Profile
-
-```text
-features/profile/
-```
-
-用户资料系统用于展示个人信息以及与社区身份相关的数据。
-
-个人资料可以进一步与：
-
-```text
-Posts
-Friends
-Languages
-Chat
-```
-
-等功能连接。
-
----
-
-## 🌍 Multilingual UI
-
-万文社从项目结构上就考虑了多语言使用场景。
-
-当前应用入口配置的语言包括：
-
-```text
-中文
-English
-日本語
-한국어
-Bahasa Melayu
-Tiếng Việt
-ไทย
-```
-
-同时还包含越南语的汉字 / 喃字脚本 Locale：
+Glyphora also supports a dedicated Vietnamese Han-script locale:
 
 ```text
 vi-Hani
 ```
 
-应用使用 Flutter Localization：
+This allows the application to distinguish between a language and the writing system used to display it.
 
 ```text
-flutter_localizations
-intl
+Language
+   +
+Script
+   ↓
+Localized experience
 ```
-
-并拥有自己的：
-
-```text
-config/l10n/
-assets/l10n/
-```
-
-本地化体系。
 
 ---
 
 ## Vietnamese Chữ Nôm Support
 
-项目包含：
+One of Glyphora's distinctive areas is support for Vietnamese Chữ Nôm content.
 
-```text
-NomNaTong
-```
+The Flutter client includes the **NomNaTong** font and script-aware locale handling.
 
-字体，并为越南语汉字 / 喃字显示提供独立的 script locale 支持。
-
-例如：
+Example:
 
 ```dart
 Locale.fromSubtags(
@@ -258,66 +161,70 @@ Locale.fromSubtags(
 )
 ```
 
-这使应用的语言系统不只是：
-
-```text
-languageCode
-```
-
-还可以进一步区分：
-
-```text
-language
-+
-script
-```
+This makes it possible to treat Chữ Nôm as part of the actual application language system instead of rendering it as an isolated special-case string.
 
 ---
 
-# Admin
+## Architecture
 
-项目包含独立管理模块：
-
-```text
-features/admin/
-```
-
-目前结构包括：
+Glyphora is organized as a monorepo:
 
 ```text
-admin_dashboard.dart
-admin_posts.dart
-admin_service.dart
-admin_stats.dart
-admin_users.dart
+glyphora/
+│
+├── apps/
+│   ├── mobile-flutter/   # Main Flutter client
+│   ├── mobile-rn/        # React Native client / experiment
+│   ├── admin/            # React administration dashboard
+│   └── api/              # Node.js / TypeScript API
+│
+├── docs/
+├── firebase.json
+└── README.md
 ```
 
-用于管理：
+### High-level system
 
-* 用户
-* 帖子
-* 平台统计
-* 管理后台数据
+```text
+┌──────────────────────────┐
+│ Flutter Mobile Client    │
+│ BLoC / Cubit             │
+└────────────┬─────────────┘
+             │
+             ├───────────────┐
+             │               │
+             ▼               ▼
+┌────────────────────┐   ┌─────────────────────┐
+│ Firebase Services  │   │ Node.js / Express   │
+│ Auth               │   │ TypeScript API      │
+│ Firestore          │   └──────────┬──────────┘
+│ Realtime Database  │              │
+│ Storage            │              ▼
+└────────────────────┘       ┌──────────────┐
+                             │ Prisma       │
+                             │ PostgreSQL   │
+                             └──────────────┘
+                                      ▲
+                                      │
+                           ┌──────────┴──────────┐
+                           │ React Admin         │
+                           │ Vite + TypeScript   │
+                           └─────────────────────┘
+```
+
+Glyphora uses a hybrid backend model: Firebase services handle authentication and real-time/mobile-oriented workloads, while the Node.js API provides server-side business logic, migrations, scheduled jobs, and PostgreSQL-backed functionality.
 
 ---
 
-# Architecture
+## Flutter Application Structure
 
-当前 Flutter 代码主要按照 Feature 组织：
+The Flutter application is organized primarily by feature.
 
 ```text
 lib/
-│
 ├── app/
-│   ├── cubit/
-│   ├── di/
-│   ├── l10n/
-│   └── router/
-│
 ├── core/
-│
 ├── data/
-│
 ├── features/
 │   ├── admin/
 │   ├── auth/
@@ -329,40 +236,27 @@ lib/
 │   ├── post/
 │   ├── profile/
 │   └── social/
-│
-├── shared/
-├── firebase_options.dart
-│
-└── main.dart
+└── shared/
 ```
 
-相比把所有页面、Service 和 Model 放在同一个目录中，这种结构更接近：
-
-```text
-Feature-oriented Architecture
-```
-
-核心业务 Feature 逐步按照以下边界组织：
+Core features progressively follow boundaries such as:
 
 ```text
 domain
 application
 data
 presentation
-  ├── cubit
-  ├── screens
-  └── widgets
 ```
 
-其中 domain 定义模型与 repository contract，data 提供 Firebase / HTTP 等 adapter，presentation 负责界面与 Cubit 状态。
+The goal is to keep UI, state orchestration, repository contracts, and data adapters from collapsing into a single layer.
 
 ---
 
-# State Management
+## State Management
 
-项目当前以 **BLoC / Cubit** 管理 UI 可变状态，并继续使用 **Provider** 注入 Repository 等长生命周期依赖。
+Glyphora uses **BLoC / Cubit** for mutable UI state and orchestration.
 
-主要 UI 状态包括：
+Examples include:
 
 ```text
 AppLanguageCubit
@@ -375,466 +269,241 @@ PostCubit
 ProfileCubit
 ```
 
-应用入口的职责可以概括为：
+`Provider` is also used for dependency injection of repositories and long-lived dependencies. Its presence does not mean the application relies on `ChangeNotifier` as its main state-management architecture.
+
+A typical flow looks like:
 
 ```text
-MaterialApp
-    │
-    ▼
-Composition Root
-    │
-    ├── Provider<Repository>
-    │     ├── AuthRepository
-    │     ├── PostRepository
-    │     ├── ChatRepository
-    │     └── ...
-    │
-    └── BlocProvider<Cubit>
-          ├── AppLanguageCubit
-          ├── AuthCubit
-          ├── ChatCubit
-          ├── FriendCubit
-          ├── DiscoverCubit
-          ├── FeedCubit
-          ├── PostCubit
-          └── ProfileCubit
+UI
+ ↓
+Cubit
+ ↓
+Repository
+ ↓
+Firebase adapter / HTTP service
+ ↓
+Backend or data source
 ```
-
-因此，代码中仍然出现的 `package:provider/provider.dart` 不等于继续使用旧的 ChangeNotifier 状态管理；部分页面使用它读取 Repository，而 UI 状态由 Cubit/BLoC 负责。
 
 ---
 
-# Authentication Flow
-
-应用启动后：
+## Authentication Flow
 
 ```text
-Firebase.initializeApp()
-        │
-        ▼
-FirebaseAuth.authStateChanges()
-        │
-        ▼
-   User logged in?
-       /      \
-     Yes       No
-      │         │
-      ▼         ▼
-MainNavigation LoginScreen
+App launch
+    ↓
+Firebase initialization
+    ↓
+Auth state listener
+    ↓
+Logged in?
+   /      \
+ Yes      No
+  ↓        ↓
+App UI   Login
 ```
 
-Firebase Authentication 负责维持用户登录状态。
+Firebase Authentication maintains the user session while the rest of the application reacts to authentication state.
 
 ---
 
-# Firebase Architecture
+## Deep Links
 
-万文社目前主要使用以下 Firebase 服务。
+The Flutter client uses `app_links` through a shared deep-link service.
 
-### Firebase Authentication
+The design allows external links to eventually resolve directly into application destinations such as:
 
-负责：
+- Posts
+- Profiles
+- Chats
+- Other community content
+
+---
+
+## Tech Stack
+
+### Mobile
+
+- Flutter
+- Dart
+- Material 3
+- BLoC / Cubit
+- Provider for dependency injection
+- GoRouter
+- Dio
+- Flutter Quill
+
+### Firebase
+
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Realtime Database
+- Firebase Storage
+
+### Backend
+
+- Node.js
+- TypeScript
+- Express
+- Prisma ORM
+- PostgreSQL
+- Firebase Admin SDK
+- Zod
+- Vitest / Supertest
+
+### Admin
+
+- React
+- TypeScript
+- Vite
+- React Router
+- TanStack Query
+- Axios
+- Ant Design
+
+### Language & Localization
+
+- Flutter Localizations
+- Intl
+- Script-aware locale handling
+- NomNaTong font for Chữ Nôm
+- Shared Glyphora language configuration package
+
+---
+
+## Backend Jobs
+
+The API contains scheduled maintenance jobs for chat-message cleanup.
+
+Examples:
 
 ```text
-Registration
-Login
-Session
-User identity
+apps/api/src/jobs/
+├── cleanup_expired_chat_messages.ts
+└── run_cleanup_expired_chat_messages.ts
 ```
 
-### Cloud Firestore
+Development command:
 
-用于保存社区主要结构化数据，例如：
-
-```text
-Users
-Posts
-Chats
-Messages
-Social data
-Notes metadata
+```bash
+npm run job:cleanup-chat-messages:dev
 ```
 
-### Firebase Storage
+Production builds can execute:
 
-用于媒体文件，例如：
-
-```text
-Post images
-Avatar images
-Chat images
-```
-
-### Realtime Database
-
-用于需要更高实时性的临时状态和实时数据。
-
-### Node Backend Jobs
-
-服务器端定时任务已经迁移到 Node.js API。
-
-聊天消息清理任务位于 apps/api/src/jobs/：
-
-- cleanup_expired_chat_messages.ts
-- run_cleanup_expired_chat_messages.ts
-
-任务负责：
-
-- 清理达到 cleanupAt 的聊天消息
-- 删除关联的 Firebase Storage 图片
-- 维护聊天列表预览
-- 清除不合法的 cleanupAt
-
-生产环境应由部署平台的 Cron / Scheduler 定期执行：
-
+```bash
 npm run job:cleanup-chat-messages
+```
+
+A deployment platform can trigger this command through a scheduler or cron service.
 
 ---
 
-# Deep Links
+## Getting Started
 
-项目使用：
-
-```text
-app_links
-```
-
-并拥有：
-
-```text
-shared/services/deep_link_service.dart
-```
-
-处理应用 Deep Link。
-
-这样未来可以支持从 App 外部链接直接进入：
-
-```text
-Post
-Profile
-Chat
-Other content
-```
-
-等指定页面。
-
----
-
-# Tech Stack
-
-## Client
-
-* Flutter
-* Dart
-* Material 3
-
-## State Management & Dependency Injection
-
-* flutter_bloc / Cubit — UI state and orchestration
-* Provider — Repository dependency injection
-
-## Backend
-
-* Firebase Authentication
-* Cloud Firestore
-* Firebase Realtime Database
-* Firebase Storage
-* Node.js / Express
-* Prisma / PostgreSQL
-
-## Rich Text
-
-* Flutter Quill
-* Flutter Quill Extensions
-
-## Media
-
-* Image Picker
-* Cached Network Image
-
-## Localization
-
-* Flutter Localizations
-* Intl
-* Custom JSON localization resources
-
-## Sharing & Navigation
-
-* Share Plus
-* App Links
-
----
-
-# Project Structure
-
-```text
-forum/
-│
-├── android/
-├── ios/
-├── linux/
-├── macos/
-├── web/
-├── windows/
-│
-├── assets/
-│   ├── l10n/
-│   └── fonts/
-│
-├── functions/
-│   ├── index.js
-│   ├── package.json
-│   └── ...
-│
-├── lib/
-│   │
-│   ├── config/
-│   ├── core/
-│   ├── data/
-│   │
-│   ├── features/
-│   │   ├── admin/
-│   │   ├── auth/
-│   │   ├── chat/
-│   │   ├── discover/
-│   │   ├── feed/
-│   │   ├── home/
-│   │   ├── notes/
-│   │   ├── profile/
-│   │   └── social/
-│   │
-│   ├── shared/
-│   ├── firebase_options.dart
-│   └── main.dart
-│
-├── firebase.json
-├── pubspec.yaml
-└── README.md
-```
-
----
-
-# Getting Started
-
-## 1. Clone
+### Clone
 
 ```bash
-git clone https://github.com/chengyang1017/forum.git
-cd forum
+git clone https://github.com/chengyang1017/glyphora.git
+cd glyphora
 ```
 
----
-
-## 2. Flutter Dependencies
+### Flutter client
 
 ```bash
+cd apps/mobile-flutter
 flutter pub get
-```
-
----
-
-## 3. Firebase
-
-该项目依赖 Firebase。
-
-你需要配置对应的 Firebase 项目，包括：
-
-```text
-Authentication
-Cloud Firestore
-Realtime Database
-Storage
-```
-
-如果使用自己的 Firebase 项目，可以使用 FlutterFire CLI 重新生成 Firebase 配置。
-
----
-
-## 4. Local Packages
-
-当前 `pubspec.yaml` 包含两个本地路径依赖：
-
-```yaml
-glyphora_ui:
-  path: C:/Users/USER/Documents/服务/glyphora_ui
-
-glyphora_language_core:
-  path: C:/Users/USER/Documents/服务/glyphora_language_core
-```
-
-因此单独 Clone 此仓库后，这两个路径在其他电脑上通常不存在。
-
-运行项目之前需要：
-
-1. 获取对应 package
-2. 修改成本机路径
-
-或者将这些 package 改为 Git / pub dependency。
-
----
-
-## 5. Run
-
-```bash
 flutter run
 ```
 
----
+The mobile application requires a configured Firebase project.
 
-# Main Application Flow
+### Admin dashboard
 
-```text
-Launch
-  │
-  ▼
-Firebase Init
-  │
-  ▼
-Authentication
-  │
-  ▼
-Main Navigation
-  │
-  ├── Feed
-  │
-  ├── Discover
-  │
-  ├── Social
-  │
-  ├── Messages
-  │
-  └── Profile
-  │
-  ▼
-Community
-  │
-  ├── Posts
-  ├── Likes
-  ├── Comments
-  ├── Friends
-  ├── Chats
-  └── Shared Notes
+```bash
+cd apps/admin
+npm install
+npm run dev
 ```
 
----
+Build:
 
-# Design Philosophy
-
-万文社并不是把“论坛”和“聊天”作为两个完全独立的功能。
-
-项目希望把不同形式的交流连接起来：
-
-```text
-短期交流
-   │
-   ▼
-Chat
-   │
-   ▼
-Shared Notes
-   │
-   ▼
-整理内容
-   │
-   ▼
-Community Post
+```bash
+npm run build
 ```
 
-聊天适合即时交流。
+### API
 
-笔记适合整理长期内容。
+```bash
+cd apps/api
+npm install
+npm run dev
+```
 
-帖子适合公开表达和社区传播。
+Type-check:
 
-最终它们组成的是一个完整的交流体系：
+```bash
+npm run typecheck
+```
+
+Build:
+
+```bash
+npm run build
+```
+
+The API requires its own environment configuration for services such as PostgreSQL and Firebase Admin credentials. Real secrets and environment files should not be committed.
+
+---
+
+## Main Product Flow
+
+```text
+Discover people and content
+          ↓
+        Posts
+          ↓
+      Conversation
+          ↓
+         Chat
+          ↓
+     Shared Notes
+          ↓
+Longer-term knowledge and community
+```
+
+Glyphora treats posts, chat, notes, languages, and relationships as connected parts of the same community rather than unrelated features.
+
+---
+
+## Project Goals
+
+Glyphora explores how a modern social product can give language and writing-system diversity first-class support.
+
+The long-term direction is broader than a conventional forum:
 
 ```text
 People
   +
 Languages
   +
+Writing Systems
+  +
 Conversation
   +
 Knowledge
-  +
-Community
+  =
+Glyphora
 ```
 
----
-
-# Project Goals
-
-万文社关注的不只是传统论坛中的：
-
-```text
-发帖 → 回复
-```
-
-而是尝试建立一个更加完整的多语言社区：
-
-```text
-Discover people
-       │
-       ▼
-Communicate
-       │
-       ▼
-Build relationships
-       │
-       ▼
-Organize knowledge
-       │
-       ▼
-Share with community
-```
-
-语言不仅是 UI 的翻译选项，也可以成为用户之间连接和交流的一部分。
+The project is especially interested in building useful infrastructure for languages and scripts that are often poorly supported in mainstream software.
 
 ---
 
-# Roadmap
+## Status
 
-* [x] 用户认证
-* [x] 帖子 Feed
-* [x] 帖子详情
-* [x] 图片上传
-* [x] 点赞
-* [x] 评论
-* [x] 好友系统
-* [x] 私信聊天
-* [x] 聊天消息管理
-* [x] 聊天图片
-* [x] Shared Notes
-* [x] 富文本编辑
-* [x] 多语言 UI
-* [x] Discover
-* [x] 用户资料
-* [x] 管理后台基础结构
-* [x] Node.js 后端
-* [x] 聊天消息定时清理
-* [ ] 继续完善通知系统
-* [ ] 完善聊天已读状态
-* [ ] 完善 Shared Notes → Post 工作流
-* [ ] 增强语言社区与语言频道
-* [ ] 增强搜索与发现
-* [ ] 完善生产环境权限与安全规则
+**Active development.**
 
----
+The repository currently contains the Flutter client, React administration application, Node.js API, Firebase integration, multilingual UI infrastructure, social/community features, real-time chat, and Chữ Nôm-oriented language support.
 
-# Status
-
-**Under active development**
-
-万文社目前仍在持续开发中。
-
-项目中的部分架构、数据库结构和交互流程仍可能随着功能扩展继续调整。
-
----
-
-# Author
-
-**Cheng Yang**
-
-A multilingual social platform experiment built around communication, language, shared knowledge and community.
-
-> Different languages. One place to communicate.
+Current work focuses on architecture refinement, backend migration, production readiness, and improving the overall product experience.
