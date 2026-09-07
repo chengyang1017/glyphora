@@ -27,6 +27,7 @@ class ProfileBioTagsSection extends StatelessWidget {
     return Container(
       margin: EdgeInsets.zero,
       padding: const EdgeInsets.all(20),
+      color: Theme.of(context).colorScheme.surface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
